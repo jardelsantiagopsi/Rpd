@@ -1,0 +1,26 @@
+{
+  "name": "RPD · Jardel Santiago",
+  "short_name": "RPD",
+  "description": "Registro de Pensamento Disfuncional — Terapia Cognitivo-Comportamental",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f0ea",
+  "theme_color": "#5c4033",
+  "orientation": "portrait",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "productivity"]
+}
