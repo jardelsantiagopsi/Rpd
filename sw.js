@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rpd-v4';
+const CACHE_NAME = 'rpd-v5';
 const ASSETS = [
   './index.html',
   './manifest.json'
