@@ -196,12 +196,7 @@ h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
 }
 .filter-chip.active { background: var(--accent3); color: #fff; border-color: var(--accent3); }
 
-/* GRÁFICO */
-.chart-section { margin-top: 20px; margin-bottom: 8px; }
-.chart-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-.chart-legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--muted); }
-.chart-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-canvas#evolutionChart { border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--border); padding: 8px; width: 100%; }
+
 
 /* FORM */
 .step-header { margin-bottom: 24px; }
@@ -517,11 +512,7 @@ input[type="range"]::-webkit-slider-thumb {
       </div>
     </div>
 
-    <div class="chart-section" id="chart-section" style="display:none">
-      <p class="section-title">Evolução emocional</p>
-      <canvas id="evolutionChart" role="img" aria-label="Gráfico de evolução emocional" style="height:auto;display:block;"></canvas>
-      <div class="chart-legend" id="chart-legend"></div>
-    </div>
+
 
     <p class="section-title" id="records-section-title" style="display:none">Registros anteriores</p>
     <div class="filters" id="filter-area" role="group" aria-label="Filtrar por emoção"></div>
@@ -1302,7 +1293,6 @@ function renderHome() {
   renderInsights();
   renderFilters();
   renderRecordList();
-  renderEvolutionChart();
   const secTitle = document.getElementById('records-section-title');
   if (secTitle) secTitle.style.display = allRecords.length ? 'block' : 'none';
 }
@@ -1542,118 +1532,6 @@ function deleteRecord(id) {
   safeStorage.setItem('rpd_records', JSON.stringify(allRecords));
   renderHome();
   showToast('Registro excluído.');
-}
-
-// ============================================================
-// EVOLUTION CHART
-// ============================================================
-function renderEvolutionChart() {
-  const section = document.getElementById('chart-section');
-  const canvas = document.getElementById('evolutionChart');
-  const legendEl = document.getElementById('chart-legend');
-  if (allRecords.length < 2) { section.style.display = 'none'; return; }
-  section.style.display = 'block';
-
-  const W = canvas.parentElement.clientWidth || 320;
-  const H = Math.round(W * 0.42);
-  canvas.width = W; canvas.height = H;
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,W,H);
-
-  const pts = allRecords.slice().reverse().slice(-10);
-  const pad = { t:24, r:16, b:32, l:34 };
-  const cw = W-pad.l-pad.r, ch = H-pad.t-pad.b;
-
-  // Background
-  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,W,H);
-
-  // Grid lines
-  [0,25,50,75,100].forEach(v => {
-    const y = pad.t + ch - (v/100)*ch;
-    ctx.strokeStyle = v===0 ? '#ccc' : '#f0ece8'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cw,y); ctx.stroke();
-    ctx.fillStyle = '#b0a090'; ctx.font = '10px Arial'; ctx.textAlign='right';
-    ctx.fillText(v+'%', pad.l-4, y+3);
-  });
-
-  // Vertical grid
-  pts.forEach((_,i) => {
-    if (i===0) return;
-    const x = pad.l + (i/(pts.length-1))*cw;
-    ctx.strokeStyle='#f5f0ea'; ctx.lineWidth=1;
-    ctx.beginPath(); ctx.moveTo(x,pad.t); ctx.lineTo(x,pad.t+ch); ctx.stroke();
-  });
-
-  const colors = ['#c4956a','#5c4033','#7aab6e','#2b5a8a','#b03020'];
-  const topEmotions = [...new Set(allRecords.flatMap(r=>r.emocoes||[]))].slice(0,4);
-
-  // Area fill for first emotion
-  if (topEmotions.length && pts.length > 1) {
-    const em = topEmotions[0];
-    ctx.beginPath();
-    let started = false;
-    pts.forEach((r,i) => {
-      const x = pad.l + (i/(pts.length-1))*cw;
-      const intens = (r.intensidades||{})[em];
-      if (intens == null) return;
-      const y = pad.t + ch - (intens/100)*ch;
-      if (!started) { ctx.moveTo(x,y); started=true; } else ctx.lineTo(x,y);
-    });
-    // Close path to bottom
-    const lastPt = pts[pts.length-1];
-    if ((lastPt.intensidades||{})[em] != null) {
-      ctx.lineTo(pad.l+cw, pad.t+ch);
-      ctx.lineTo(pad.l, pad.t+ch);
-      ctx.closePath();
-      const grad = ctx.createLinearGradient(0,pad.t,0,pad.t+ch);
-      grad.addColorStop(0,'rgba(196,149,106,0.18)');
-      grad.addColorStop(1,'rgba(196,149,106,0.02)');
-      ctx.fillStyle=grad; ctx.fill();
-    }
-  }
-
-  // Lines
-  topEmotions.forEach((em,ei) => {
-    ctx.beginPath(); ctx.strokeStyle=colors[ei%colors.length]; ctx.lineWidth=2.5;
-    ctx.lineJoin='round'; ctx.lineCap='round';
-    let first=true;
-    pts.forEach((r,i) => {
-      const x = pad.l + (i/(pts.length-1))*cw;
-      const intens = (r.intensidades||{})[em];
-      if (intens==null) return;
-      const y = pad.t+ch-(intens/100)*ch;
-      if (first) { ctx.moveTo(x,y); first=false; } else ctx.lineTo(x,y);
-    });
-    ctx.stroke();
-    // Dots
-    pts.forEach((r,i) => {
-      const x = pad.l+(i/(pts.length-1))*cw;
-      const intens=(r.intensidades||{})[em];
-      if (intens==null) return;
-      const y=pad.t+ch-(intens/100)*ch;
-      ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
-      ctx.fillStyle='#fff'; ctx.fill();
-      ctx.strokeStyle=colors[ei%colors.length]; ctx.lineWidth=2; ctx.stroke();
-    });
-  });
-
-  // X labels
-  ctx.fillStyle='#8c7b6a'; ctx.font='10px Arial'; ctx.textAlign='center';
-  pts.forEach((r,i) => {
-    if (pts.length > 6 && i%2!==0) return;
-    const x=pad.l+(i/(pts.length-1))*cw;
-    const d=new Date(r.date);
-    ctx.fillText(`${d.getDate()}/${d.getMonth()+1}`,x,H-4);
-  });
-
-  // Legend
-  legendEl.innerHTML='';
-  topEmotions.forEach((em,ei) => {
-    const item = document.createElement('div');
-    item.className = 'chart-legend-item';
-    item.innerHTML = `<div class="chart-legend-dot" style="background:${colors[ei%colors.length]}"></div>${em}`;
-    legendEl.appendChild(item);
-  });
 }
 
 // ============================================================
