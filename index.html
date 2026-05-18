@@ -14,85 +14,31 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" href="icon-192.png" type="image/png">
 <style>
-/* ===== FONTES EMBUTIDAS (offline) ===== */
-@font-face {
-  font-family: 'Lora';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Georgia'), local('Times New Roman');
-}
-@font-face {
-  font-family: 'AppBody';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Helvetica Neue'), local('Arial');
-}
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg:        #f5f0ea;
-  --surface:   #fdf9f5;
-  --card:      #ffffff;
-  --border:    #e2d9ce;
-  --accent:    #8b6f47;
-  --accent2:   #c4956a;
-  --accent3:   #5c4033;
-  --text:      #2d2016;
-  --muted:     #6b5a4a;
-  --danger:    #b03020;
-  --success:   #3d6b35;
-  --info:      #2b5a8a;
-  --info-bg:   #e8f0fa;
-  --info-border:#b8cff0;
-  --shadow:    0 2px 16px rgba(139,111,71,0.10);
-  --radius:    16px;
-  --radius-sm: 10px;
+  --bg: #f5f0ea; --surface: #fdf9f5; --card: #ffffff;
+  --border: #e2d9ce; --accent: #8b6f47; --accent2: #c4956a;
+  --accent3: #5c4033; --text: #2d2016; --muted: #6b5a4a;
+  --danger: #b03020; --success: #3d6b35; --info: #2b5a8a;
+  --info-bg: #e8f0fa; --info-border: #b8cff0;
+  --shadow: 0 2px 16px rgba(139,111,71,0.10);
+  --radius: 16px; --radius-sm: 10px;
   --focus-ring: 0 0 0 3px rgba(139,111,71,0.35);
 }
-
 html { font-size: 16px; scroll-behavior: smooth; }
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--bg); color: var(--text);
   min-height: 100vh;
   padding-bottom: calc(80px + env(safe-area-inset-bottom));
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
   line-height: 1.5;
 }
-
-/* Banner instalar PWA */
-#install-banner {
-  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
-  background: linear-gradient(135deg, var(--accent3), var(--accent));
-  color: #fff; padding: 14px 20px; padding-bottom: calc(14px + env(safe-area-inset-bottom));
-  align-items: center; justify-content: space-between; gap: 12px;
-  box-shadow: 0 -4px 20px rgba(92,64,51,0.25);
-}
-#install-banner .install-text { font-size: 0.88rem; font-weight: 600; line-height: 1.4; }
-#install-banner .install-text span { font-size: 0.78rem; font-weight: 400; opacity: 0.85; display: block; }
-#install-banner .install-actions { display: flex; gap: 8px; flex-shrink: 0; }
-.btn-install {
-  background: #fff; color: var(--accent3); border: none; border-radius: 20px;
-  padding: 8px 16px; font-size: 0.85rem; font-weight: 700; cursor: pointer; min-height: 36px;
-}
-.btn-install-dismiss {
-  background: none; border: 1px solid rgba(255,255,255,0.5); color: #fff;
-  border-radius: 20px; padding: 8px 12px; font-size: 0.82rem; cursor: pointer; min-height: 36px;
-}
-h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
-
-/* Acessibilidade: foco visível */
-*:focus-visible {
-  outline: 3px solid var(--accent2);
-  outline-offset: 2px;
-}
-
+*:focus-visible { outline: 3px solid var(--accent2); outline-offset: 2px; }
 .app-shell { max-width: 480px; margin: 0 auto; padding: 0 16px; }
 
-/* ===== HEADER ===== */
+/* HEADER */
 .app-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 18px 0 14px; border-bottom: 1px solid var(--border); margin-bottom: 24px;
@@ -104,46 +50,62 @@ h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
   color: #fff; font-family: Georgia, serif; font-size: 1rem; font-style: italic;
   display: flex; align-items: center; justify-content: center; font-weight: 700;
   box-shadow: 0 2px 8px rgba(92,64,51,0.25); flex-shrink: 0;
-  letter-spacing: 0.02em;
 }
 .logo-text { display: flex; flex-direction: column; }
-.logo-name { font-family: Georgia, serif; font-size: 0.95rem; font-weight: 700; color: var(--accent3); letter-spacing: 0.01em; line-height: 1.2; }
+.logo-name { font-family: Georgia, serif; font-size: 0.95rem; font-weight: 700; color: var(--accent3); line-height: 1.2; }
 .logo-title { font-size: 0.68rem; color: var(--muted); font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 1px; }
 .logo-crp { font-size: 0.65rem; color: var(--accent2); font-weight: 600; margin-top: 1px; }
 
-/* ===== SCREENS ===== */
+/* HEADER NAV ICONS */
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.header-icon-btn {
+  width: 38px; height: 38px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--card); display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; cursor: pointer; transition: all 0.2s;
+}
+.header-icon-btn:hover { background: var(--bg); border-color: var(--accent); }
+
+/* SCREENS */
 .screen { display: none; animation: fadeIn 0.3s ease; }
 .screen.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ===== HOME ===== */
+h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
+
+/* ONBOARDING */
+.onboard-card { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 20px; }
+
+/* HOME HERO */
 .home-hero {
   background: linear-gradient(135deg, var(--accent3) 0%, var(--accent) 100%);
-  border-radius: var(--radius); padding: 28px 24px; color: #fff; margin-bottom: 28px;
+  border-radius: var(--radius); padding: 24px 20px; color: #fff; margin-bottom: 20px;
 }
-.home-hero h2 { font-size: 1.5rem; margin-bottom: 8px; font-weight: 700; }
-.home-hero p { font-size: 0.9rem; opacity: 0.9; line-height: 1.6; margin-bottom: 20px; }
+.home-hero h2 { font-size: 1.3rem; margin-bottom: 6px; font-weight: 700; }
+.home-hero p { font-size: 0.88rem; opacity: 0.9; line-height: 1.6; margin-bottom: 18px; }
 
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 8px; background: #fff;
-  color: var(--accent3); border: none; padding: 16px 28px; border-radius: 50px;
-  font-family: inherit; font-size: 1rem; font-weight: 600; cursor: pointer;
-  transition: all 0.2s; box-shadow: 0 2px 12px rgba(0,0,0,0.12);
-  min-height: 52px;
+/* MODO BUTTONS */
+.mode-buttons { display: flex; gap: 10px; }
+.btn-mode {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3);
+  color: #fff; padding: 14px 10px; border-radius: 12px;
+  font-family: inherit; cursor: pointer; transition: all 0.2s; min-height: 72px;
 }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.16); }
+.btn-mode:hover { background: rgba(255,255,255,0.25); }
+.btn-mode .mode-icon { font-size: 1.4rem; }
+.btn-mode .mode-title { font-size: 0.88rem; font-weight: 700; }
+.btn-mode .mode-sub { font-size: 0.72rem; opacity: 0.8; text-align: center; line-height: 1.3; }
 
 .section-title {
   font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
   letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px;
 }
 
-/* ===== INSIGHTS BANNER ===== */
+/* INSIGHTS */
 .insights-banner {
   background: linear-gradient(135deg, #f0f7ff 0%, #e8f0fa 100%);
   border: 1px solid var(--info-border); border-radius: var(--radius);
-  padding: 16px 18px; margin-bottom: 20px;
-  display: none;
+  padding: 16px 18px; margin-bottom: 20px; display: none;
 }
 .insights-banner-header {
   display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
@@ -158,19 +120,37 @@ h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
 .insight-item:last-child { border-bottom: none; padding-bottom: 0; }
 .insight-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
 
-/* ===== RECORD CARDS ===== */
+/* CONQUISTAS */
+.achievements-row {
+  display: flex; gap: 10px; margin-bottom: 20px;
+}
+.achievement-card {
+  flex: 1; background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px 10px; text-align: center;
+  box-shadow: var(--shadow);
+}
+.achievement-icon { font-size: 1.6rem; margin-bottom: 4px; }
+.achievement-val { font-size: 1.3rem; font-weight: 700; color: var(--accent3); font-family: Georgia, serif; }
+.achievement-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+
+/* RECORD CARDS */
 .record-list { display: flex; flex-direction: column; gap: 12px; }
 .record-card {
   background: var(--card); border-radius: var(--radius); padding: 18px;
   box-shadow: var(--shadow); border: 1px solid var(--border); transition: all 0.2s;
 }
-.record-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(139,111,71,0.14); }
 .record-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-.record-date { font-size: 0.78rem; color: var(--muted); font-weight: 400; }
+.record-date { font-size: 0.78rem; color: var(--muted); }
+.record-badges { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .emotion-badge {
   display: inline-flex; align-items: center; gap: 4px; background: var(--bg);
-  border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px;
-  font-size: 0.78rem; color: var(--accent3); font-weight: 600;
+  border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px;
+  font-size: 0.75rem; color: var(--accent3); font-weight: 600;
+}
+.mode-badge {
+  display: inline-flex; align-items: center; background: var(--accent3);
+  color: #fff; border-radius: 20px; padding: 3px 8px;
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.03em;
 }
 .record-situation {
   font-size: 0.9rem; color: var(--text); line-height: 1.5;
@@ -178,23 +158,14 @@ h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
 }
 .record-expand {
   display: flex; align-items: center; gap: 4px; font-size: 0.82rem;
-  color: var(--accent); margin-top: 12px; font-weight: 600; cursor: pointer;
+  color: var(--accent); margin-top: 10px; font-weight: 600; cursor: pointer;
   background: none; border: none; padding: 4px 0; text-decoration: underline;
 }
-.record-expand:hover { color: var(--accent3); }
 .record-details { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
 .record-details.open { display: block; }
 .detail-row { display: flex; flex-direction: column; gap: 3px; margin-bottom: 12px; }
 .detail-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); font-weight: 600; }
 .detail-value { font-size: 0.88rem; color: var(--text); line-height: 1.5; }
-
-/* Mensagem clínica no card */
-.clinical-note {
-  background: #fffbf0; border: 1px solid #e8d89a; border-radius: var(--radius-sm);
-  padding: 10px 14px; margin: 10px 0; font-size: 0.82rem; color: #5a4200;
-  line-height: 1.55; display: flex; gap: 8px; align-items: flex-start;
-}
-.clinical-note-icon { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
 
 .ba-chart { background: var(--bg); border-radius: var(--radius-sm); padding: 12px; margin-top: 8px; }
 .ba-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
@@ -206,54 +177,51 @@ h1, h2, h3 { font-family: Georgia, 'Times New Roman', serif; }
 .card-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
 .action-btn {
   display: flex; align-items: center; gap: 6px; background: none;
-  border: 2px solid var(--border); color: var(--accent3); padding: 10px 16px;
-  border-radius: 10px; font-size: 0.85rem; cursor: pointer;
+  border: 2px solid var(--border); color: var(--accent3); padding: 10px 14px;
+  border-radius: 10px; font-size: 0.82rem; cursor: pointer;
   font-family: inherit; transition: all 0.2s; font-weight: 500; min-height: 44px;
 }
 .action-btn:hover { background: var(--bg); border-color: var(--accent); }
 .action-btn.danger { border-color: #e5b4b0; color: var(--danger); }
 .action-btn.danger:hover { background: #fdecea; border-color: var(--danger); }
+.action-btn.whatsapp { background: #25D366; color: #fff; border-color: #25D366; }
+.action-btn.whatsapp:hover { background: #20b858; }
 
-/* ===== FILTERS ===== */
+/* FILTERS */
 .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
 .filter-chip {
-  padding: 8px 16px; border-radius: 20px; border: 1.5px solid var(--border);
+  padding: 8px 14px; border-radius: 20px; border: 1.5px solid var(--border);
   background: var(--card); font-size: 0.82rem; color: var(--muted); cursor: pointer;
   font-family: inherit; transition: all 0.2s; font-weight: 500; min-height: 40px;
 }
 .filter-chip.active { background: var(--accent3); color: #fff; border-color: var(--accent3); }
 
-/* ===== FORM ===== */
+/* GRÁFICO */
+.chart-section { margin-top: 20px; margin-bottom: 8px; }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.chart-legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--muted); }
+.chart-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+canvas#evolutionChart { border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--border); padding: 8px; width: 100%; }
+
+/* FORM */
 .step-header { margin-bottom: 24px; }
 .progress-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .step-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
 .step-fraction { font-size: 0.75rem; color: var(--muted); font-weight: 500; }
 .progress-bar-wrap { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
 .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent3)); border-radius: 3px; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
-
-.step-question { font-family: Georgia, serif; font-size: 1.3rem; line-height: 1.4; color: var(--accent3); margin-bottom: 6px; font-weight: 700; }
+.step-question { font-family: Georgia, serif; font-size: 1.25rem; line-height: 1.4; color: var(--accent3); margin-bottom: 6px; font-weight: 700; }
 .step-subtext { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
 
-/* Mensagem de distorção cognitiva (dentro do passo 5) */
-.distortion-insight {
-  background: var(--info-bg); border: 1px solid var(--info-border);
-  border-radius: var(--radius-sm); padding: 14px 16px;
-  margin-top: 16px; display: none;
-  animation: fadeIn 0.4s ease;
+/* MODO BADGE NO FORM */
+.form-mode-badge {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+  border-radius: 20px; font-size: 0.78rem; font-weight: 700; margin-bottom: 20px;
+  background: var(--accent3); color: #fff;
 }
-.distortion-insight.show { display: block; }
-.distortion-insight-title {
-  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.08em; color: var(--info); margin-bottom: 8px;
-}
-.distortion-insight-item {
-  font-size: 0.85rem; color: #1e3a5a; line-height: 1.6;
-  padding: 6px 0; border-bottom: 1px dashed #c5d8f0; display: flex; gap: 8px;
-}
-.distortion-insight-item:last-child { border-bottom: none; }
 
 textarea {
-  width: 100%; min-height: 130px; padding: 16px; border: 2px solid var(--border);
+  width: 100%; min-height: 120px; padding: 16px; border: 2px solid var(--border);
   border-radius: var(--radius-sm); background: var(--card);
   font-family: inherit; font-size: 0.95rem; color: var(--text);
   resize: vertical; transition: border-color 0.2s; line-height: 1.6;
@@ -262,13 +230,12 @@ textarea:focus { outline: none; border-color: var(--accent2); box-shadow: var(--
 
 .emotion-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
 .emotion-chip {
-  padding: 10px 16px; border-radius: 20px; border: 2px solid var(--border);
-  background: var(--card); font-size: 0.88rem; color: var(--text); cursor: pointer;
-  font-family: inherit; transition: all 0.18s; user-select: none; font-weight: 500;
-  min-height: 44px;
+  padding: 10px 14px; border-radius: 20px; border: 2px solid var(--border);
+  background: var(--card); font-size: 0.85rem; color: var(--text); cursor: pointer;
+  font-family: inherit; transition: all 0.18s; user-select: none; font-weight: 500; min-height: 44px;
 }
 .emotion-chip.selected { background: var(--accent3); color: #fff; border-color: var(--accent3); }
-.emotion-sliders { display: flex; flex-direction: column; gap: 16px; }
+.emotion-sliders { display: flex; flex-direction: column; gap: 14px; }
 .emotion-slider-row { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; }
 .emotion-slider-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.9rem; font-weight: 600; }
 .emotion-slider-val { font-size: 0.88rem; color: var(--accent); font-weight: 700; min-width: 44px; text-align: right; background: var(--bg); border-radius: 6px; padding: 2px 8px; }
@@ -298,15 +265,12 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%;
   background: var(--accent3); cursor: pointer; box-shadow: 0 2px 8px rgba(92,64,51,0.3);
 }
-input[type="range"]:focus-visible {
-  box-shadow: var(--focus-ring);
-}
 
 .guided-questions { background: var(--bg); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 14px; border-left: 4px solid var(--accent2); }
 .guided-questions p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; margin-bottom: 8px; }
 .guided-questions p:last-child { margin-bottom: 0; }
 
-.reass-grid { display: flex; flex-direction: column; gap: 20px; }
+.reass-grid { display: flex; flex-direction: column; gap: 16px; }
 .reass-item { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 16px; }
 .reass-label { font-size: 0.9rem; color: var(--text); margin-bottom: 12px; line-height: 1.45; }
 .reass-vals { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-top: 6px; font-weight: 500; }
@@ -317,16 +281,14 @@ input[type="range"]:focus-visible {
 .btn-back {
   padding: 16px 22px; border-radius: 50px; border: 2px solid var(--border);
   background: var(--card); color: var(--text); font-family: inherit;
-  font-size: 0.95rem; cursor: pointer; transition: all 0.2s; font-weight: 500;
-  min-height: 52px;
+  font-size: 0.95rem; cursor: pointer; transition: all 0.2s; font-weight: 500; min-height: 52px;
 }
 .btn-back:hover { background: var(--bg); border-color: var(--accent); }
 .btn-next {
   flex: 1; padding: 16px 20px; border-radius: 50px; border: none;
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
   color: #fff; font-family: inherit; font-size: 1rem; font-weight: 700;
-  cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 12px rgba(92,64,51,0.25);
-  min-height: 52px;
+  cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 12px rgba(92,64,51,0.25); min-height: 52px;
 }
 .btn-next:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(92,64,51,0.3); }
 
@@ -337,7 +299,100 @@ input[type="range"]:focus-visible {
 }
 .validation-msg.show { display: block; }
 
-/* ===== MIND MAP ===== */
+/* TELA DE CONCLUSÃO */
+.completion-screen { text-align: center; padding: 20px 0; }
+.completion-emoji { font-size: 3rem; margin-bottom: 16px; animation: bounceIn 0.6s ease; }
+@keyframes bounceIn { 0%{transform:scale(0.5);opacity:0} 70%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+.completion-title { font-family: Georgia, serif; font-size: 1.4rem; color: var(--accent3); margin-bottom: 10px; }
+.completion-phrase { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 28px; padding: 0 8px; font-style: italic; }
+.completion-actions { display: flex; flex-direction: column; gap: 10px; }
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
+  color: #fff; border: none; padding: 16px 28px; border-radius: 50px;
+  font-family: inherit; font-size: 1rem; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; box-shadow: 0 2px 12px rgba(92,64,51,0.25); min-height: 52px; width: 100%;
+}
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-secondary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: #25D366; color: #fff; border: none; padding: 16px 28px; border-radius: 50px;
+  font-family: inherit; font-size: 1rem; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; min-height: 52px; width: 100%;
+}
+.btn-tertiary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--card); color: var(--accent3); border: 2px solid var(--border);
+  padding: 14px 28px; border-radius: 50px; font-family: inherit; font-size: 0.95rem;
+  font-weight: 600; cursor: pointer; transition: all 0.2s; min-height: 48px; width: 100%;
+}
+
+/* BIBLIOTECA */
+.library-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+.lib-tab {
+  flex: 1; padding: 10px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--card); font-size: 0.85rem; color: var(--muted); cursor: pointer;
+  font-family: inherit; transition: all 0.2s; font-weight: 600; text-align: center;
+}
+.lib-tab.active { background: var(--accent3); color: #fff; border-color: var(--accent3); }
+.lib-content { display: none; }
+.lib-content.active { display: block; }
+
+.technique-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px; margin-bottom: 12px; box-shadow: var(--shadow);
+}
+.technique-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; cursor: pointer; }
+.technique-icon { font-size: 1.5rem; }
+.technique-title { font-family: Georgia, serif; font-size: 1rem; color: var(--accent3); font-weight: 700; flex: 1; }
+.technique-toggle { font-size: 0.9rem; color: var(--muted); }
+.technique-body { display: none; }
+.technique-body.open { display: block; }
+.technique-body p { font-size: 0.88rem; color: var(--text); line-height: 1.7; margin-bottom: 10px; }
+.technique-steps { list-style: none; padding: 0; }
+.technique-steps li {
+  display: flex; gap: 10px; font-size: 0.87rem; color: var(--text);
+  line-height: 1.6; margin-bottom: 10px; padding: 10px 12px;
+  background: var(--bg); border-radius: 8px;
+}
+.technique-steps li .step-num {
+  width: 22px; height: 22px; border-radius: 50%; background: var(--accent3); color: #fff;
+  font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+
+.distortion-dict-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 16px; margin-bottom: 10px;
+}
+.distortion-dict-header { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.distortion-dict-icon { font-size: 1.2rem; }
+.distortion-dict-name { font-weight: 700; color: var(--accent3); font-size: 0.95rem; flex: 1; }
+.distortion-dict-body { display: none; margin-top: 12px; }
+.distortion-dict-body.open { display: block; }
+.distortion-dict-body p { font-size: 0.87rem; color: var(--text); line-height: 1.65; margin-bottom: 8px; }
+.distortion-example {
+  background: var(--info-bg); border: 1px solid var(--info-border);
+  border-radius: 8px; padding: 10px 12px; font-size: 0.85rem;
+  color: var(--info); line-height: 1.6; margin-top: 8px;
+}
+.distortion-alt {
+  background: #f0faf0; border: 1px solid #b8e0c0;
+  border-radius: 8px; padding: 10px 12px; font-size: 0.85rem;
+  color: #1a5a2a; line-height: 1.6; margin-top: 6px;
+}
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--success); color: #fff; padding: 14px 28px; border-radius: 50px;
+  font-size: 0.9rem; font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 1000; white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* MINDMAP */
 .mindmap-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .mindmap-back {
   background: none; border: none; color: var(--accent); font-size: 0.9rem;
@@ -345,40 +400,10 @@ input[type="range"]:focus-visible {
   display: flex; align-items: center; gap: 4px; font-weight: 600;
 }
 .mindmap-title { font-family: Georgia, serif; font-size: 1.1rem; color: var(--accent3); font-weight: 700; }
-#mindmap-canvas { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); background: var(--card); }
+#mindmap-canvas { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border); }
 .mindmap-actions { display: flex; gap: 10px; margin-top: 14px; }
 
-/* ===== TOAST ===== */
-.toast {
-  position: fixed; bottom: 24px; left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: var(--success); color: #fff; padding: 14px 28px; border-radius: 50px;
-  font-size: 0.9rem; font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 1000;
-  white-space: nowrap;
-}
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-/* ===== ONBOARDING ===== */
-.onboard-card { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); margin-bottom: 20px; }
-.onboard-icon { font-size: 2.2rem; margin-bottom: 12px; }
-.onboard-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--accent3); font-weight: 700; }
-.onboard-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
-.onboard-steps { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
-.onboard-step { display: flex; align-items: flex-start; gap: 10px; font-size: 0.87rem; color: var(--text); line-height: 1.55; }
-.onboard-step-num {
-  width: 24px; height: 24px; border-radius: 50%; background: var(--accent3); color: #fff;
-  font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px;
-}
-.btn-dismiss {
-  width: 100%; padding: 16px; border-radius: 50px; border: none;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent3) 100%);
-  color: #fff; font-family: inherit; font-size: 1rem; font-weight: 700;
-  cursor: pointer; margin-top: 20px; transition: all 0.2s; min-height: 52px;
-}
-
-/* ===== DRAFT ===== */
+/* DRAFT */
 .draft-banner {
   background: #fff8ec; border: 1.5px solid #f0d9a8; border-radius: var(--radius-sm);
   padding: 14px 16px; margin-bottom: 20px; display: flex;
@@ -388,26 +413,40 @@ input[type="range"]:focus-visible {
 .draft-actions { display: flex; gap: 8px; flex-shrink: 0; }
 .btn-draft-resume, .btn-draft-discard {
   padding: 8px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;
-  font-family: inherit; font-weight: 600; border: none; transition: all 0.18s;
-  min-height: 40px;
+  font-family: inherit; font-weight: 600; border: none; transition: all 0.18s; min-height: 40px;
 }
 .btn-draft-resume { background: #f0d9a8; color: #7a5c1e; }
 .btn-draft-discard { background: none; color: #9e8050; text-decoration: underline; }
 
-/* ===== EMPTY ===== */
+/* EMPTY */
 .empty-state { text-align: center; padding: 40px 20px; color: var(--muted); }
 .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
 .empty-state p { font-size: 0.9rem; line-height: 1.6; }
 
-/* ===== EVOLUTION CHART ===== */
-.chart-section { margin-top: 28px; }
-canvas#evolutionChart { border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--border); padding: 8px; }
+/* INSTALL BANNER */
+#install-banner {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+  background: linear-gradient(135deg, var(--accent3), var(--accent));
+  color: #fff; padding: 14px 20px; padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  align-items: center; justify-content: space-between; gap: 12px;
+  box-shadow: 0 -4px 20px rgba(92,64,51,0.25);
+}
+#install-banner .install-text { font-size: 0.88rem; font-weight: 600; line-height: 1.4; }
+#install-banner .install-text span { font-size: 0.78rem; font-weight: 400; opacity: 0.85; display: block; }
+#install-banner .install-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.btn-install { background: #fff; color: var(--accent3); border: none; border-radius: 20px; padding: 8px 16px; font-size: 0.85rem; font-weight: 700; cursor: pointer; min-height: 36px; }
+.btn-install-dismiss { background: none; border: 1px solid rgba(255,255,255,0.5); color: #fff; border-radius: 20px; padding: 8px 12px; font-size: 0.82rem; cursor: pointer; min-height: 36px; }
+
+.distortion-insight { background: var(--info-bg); border: 1px solid var(--info-border); border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 16px; display: none; animation: fadeIn 0.4s ease; }
+.distortion-insight.show { display: block; }
+.distortion-insight-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--info); margin-bottom: 8px; }
+.distortion-insight-item { font-size: 0.85rem; color: #1e3a5a; line-height: 1.6; padding: 6px 0; border-bottom: 1px dashed #c5d8f0; display: flex; gap: 8px; }
+.distortion-insight-item:last-child { border-bottom: none; }
 </style>
 </head>
 <body>
 <div class="app-shell">
 
-  <!-- HEADER -->
   <header class="app-header" role="banner">
     <div class="logo-wrap">
       <div class="logo-monogram" aria-hidden="true">JS</div>
@@ -417,39 +456,32 @@ canvas#evolutionChart { border-radius: var(--radius-sm); background: var(--card)
         <span class="logo-crp">Registro de Pensamento — TCC</span>
       </div>
     </div>
-    <div style="font-size:1.4rem" aria-hidden="true">🌿</div>
+    <div class="header-actions">
+      <button class="header-icon-btn" onclick="showScreen('library')" title="Biblioteca" aria-label="Abrir biblioteca de técnicas">📚</button>
+    </div>
   </header>
 
-  <!-- ===== ONBOARDING / NOME ===== -->
+  <!-- ONBOARDING -->
   <div class="screen" id="screen-onboarding" role="main">
     <div class="onboard-card" style="text-align:center;padding:32px 24px 28px;">
-      <div class="onboard-icon" aria-hidden="true" style="font-size:2.8rem;margin-bottom:16px">🌿</div>
-      <h3 style="font-size:1.25rem;margin-bottom:12px;color:var(--accent3)">Olá! Seja bem-vindo(a).</h3>
+      <div style="font-size:2.8rem;margin-bottom:16px">🌿</div>
+      <h3 style="font-size:1.25rem;margin-bottom:12px;color:var(--accent3);font-family:Georgia,serif">Olá! Seja bem-vindo(a).</h3>
       <p style="margin-bottom:20px;line-height:1.75;font-size:0.92rem">
-        Este é um espaço seguro e privado, preparado especialmente pelo <strong>Jardel Santiago</strong> para te ajudar a examinar seus pensamentos com gentileza e clareza.<br><br>
-        Para começar, me diga: <strong>qual é o seu nome?</strong>
+        Este é um espaço seguro e privado, preparado pelo <strong>Jardel Santiago</strong> para te ajudar a examinar seus pensamentos com gentileza e clareza.<br><br>
+        Para começar, qual é o seu nome?
       </p>
-      <input
-        type="text"
-        id="input-paciente-nome"
-        placeholder="Digite seu nome aqui..."
-        aria-label="Seu nome"
-        autocomplete="name"
-        style="
-          width:100%;padding:16px;border:2px solid var(--border);border-radius:var(--radius-sm);
-          background:var(--bg);font-family:inherit;font-size:1rem;color:var(--text);
-          text-align:center;margin-bottom:8px;transition:border-color 0.2s;outline:none;
-        "
+      <input type="text" id="input-paciente-nome" placeholder="Digite seu nome aqui..."
+        aria-label="Seu nome" autocomplete="name"
+        style="width:100%;padding:16px;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);font-family:inherit;font-size:1rem;color:var(--text);text-align:center;margin-bottom:8px;transition:border-color 0.2s;outline:none;"
         oninput="this.style.borderColor='var(--accent2)'"
-        onkeydown="if(event.key==='Enter')dismissOnboarding()"
-      >
-      <p id="nome-error" style="display:none;font-size:0.82rem;color:var(--danger);margin-bottom:12px">Por favor, escreva seu nome para continuar. 💬</p>
-      <button class="btn-dismiss" onclick="dismissOnboarding()" style="margin-top:12px">Começar →</button>
+        onkeydown="if(event.key==='Enter')dismissOnboarding()">
+      <p id="nome-error" style="display:none;font-size:0.82rem;color:var(--danger);margin-bottom:12px">Por favor, escreva seu nome para continuar.</p>
+      <button class="btn-primary" onclick="dismissOnboarding()" style="margin-top:12px">Começar</button>
       <p style="font-size:0.75rem;color:var(--muted);margin-top:16px">Seus registros ficam salvos apenas neste aparelho, de forma privada.</p>
     </div>
   </div>
 
-  <!-- ===== HOME ===== -->
+  <!-- HOME -->
   <div class="screen" id="screen-home" role="main">
     <div class="draft-banner" id="draft-banner" style="display:none" role="alert">
       <div class="draft-text">📝 Você tem um rascunho não salvo. Continuar?</div>
@@ -459,237 +491,423 @@ canvas#evolutionChart { border-radius: var(--radius-sm); background: var(--card)
       </div>
     </div>
 
-    <!-- INSIGHTS AUTOMÁTICOS -->
     <div class="insights-banner" id="insights-banner" aria-live="polite">
-      <div class="insights-banner-header">
-        <span aria-hidden="true">💡</span> Insights dos seus registros
-      </div>
+      <div class="insights-banner-header"><span aria-hidden="true">💡</span> Insights dos seus registros</div>
       <div id="insights-list"></div>
     </div>
 
-    <div class="home-hero">
-      <h2>Como você está?</h2>
-      <p>Registre o que está passando pela sua mente. Leva cerca de 5 minutos.</p>
-      <button class="btn-primary" onclick="startNew()">✦ Novo Registro</button>
+    <div id="achievements-area" style="display:none">
+      <div class="achievements-row" id="achievements-row"></div>
     </div>
 
-    <p class="section-title">Registros anteriores</p>
-    <div class="filters" id="filter-area" role="group" aria-label="Filtrar por emoção"></div>
+    <div class="home-hero">
+      <h2 id="hero-greeting">Como você está?</h2>
+      <p>Escolha o tipo de registro que faz mais sentido para hoje.</p>
+      <div class="mode-buttons">
+        <button class="btn-mode" onclick="startNew('simples')">
+          <span class="mode-icon">🌱</span>
+          <span class="mode-title">Registro Simples</span>
+          <span class="mode-sub">Rápido e direto</span>
+        </button>
+        <button class="btn-mode" onclick="startNew('completo')">
+          <span class="mode-icon">🧠</span>
+          <span class="mode-title">Registro Completo</span>
+          <span class="mode-sub">Análise aprofundada</span>
+        </button>
+      </div>
+    </div>
 
     <div class="chart-section" id="chart-section" style="display:none">
       <p class="section-title">Evolução emocional</p>
-      <canvas id="evolutionChart" role="img" aria-label="Gráfico de evolução emocional" style="width:100%;height:auto;display:block;"></canvas>
+      <canvas id="evolutionChart" role="img" aria-label="Gráfico de evolução emocional" style="height:auto;display:block;"></canvas>
+      <div class="chart-legend" id="chart-legend"></div>
     </div>
 
+    <p class="section-title" id="records-section-title" style="display:none">Registros anteriores</p>
+    <div class="filters" id="filter-area" role="group" aria-label="Filtrar por emoção"></div>
     <div class="record-list" id="record-list" role="list">
       <div class="empty-state">
-        <div class="empty-icon" aria-hidden="true">🌱</div>
+        <div class="empty-icon">🌱</div>
         <p>Nenhum registro ainda.<br>Crie seu primeiro registro acima.</p>
       </div>
     </div>
   </div>
 
-  <!-- ===== FORM ===== -->
+  <!-- FORM -->
   <div class="screen" id="screen-form" role="main">
+    <div id="form-mode-badge" class="form-mode-badge">🌱 Registro Simples</div>
     <div class="step-header" aria-live="polite">
       <div class="progress-info">
         <span class="step-label" id="step-name">Situação</span>
-        <span class="step-fraction" id="step-fraction">1 de 10</span>
+        <span class="step-fraction" id="step-fraction">1 de 6</span>
       </div>
-      <div class="progress-bar-wrap" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso do formulário">
-        <div class="progress-bar-fill" id="progress-bar" style="width:10%"></div>
+      <div class="progress-bar-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
       </div>
     </div>
 
-    <div class="form-step" id="step-1">
+    <!-- PASSOS SIMPLES (S) -->
+    <div class="form-step" id="step-s1">
+      <div class="step-question">O que aconteceu?</div>
+      <div class="step-subtext">Descreva a situação. Onde você estava, o que foi dito ou feito, o que pode ter desencadeado o que você sentiu.</div>
+      <textarea id="fs-situacao" placeholder="Ex: Estava em uma reunião e meu chefe fez um comentário sobre meu trabalho..." aria-label="Descreva a situação"></textarea>
+    </div>
+    <div class="form-step" id="step-s2" style="display:none">
+      <div class="step-question">O que você sentiu?</div>
+      <div class="step-subtext">Selecione as emoções que apareceram. Pode marcar mais de uma.</div>
+      <div class="emotion-grid" id="emotion-chips-s" role="group" aria-label="Selecione as emoções"></div>
+      <div class="emotion-sliders" id="emotion-sliders-s"></div>
+    </div>
+    <div class="form-step" id="step-s3" style="display:none">
       <div class="step-question">O que passou pela sua cabeça?</div>
       <div class="step-subtext">Pensamentos automáticos surgem de forma rápida e espontânea. Escreva exatamente o que pensou, sem filtrar.</div>
-      <textarea id="f-pensamento" placeholder="Ex: 'Nunca faço nada certo', 'Todo mundo deve ter percebido'..." aria-label="Descreva o pensamento automático"></textarea>
+      <textarea id="fs-pensamento" placeholder="Ex: 'Nunca faço nada certo', 'Todo mundo deve ter percebido'..." aria-label="Descreva o pensamento automático"></textarea>
     </div>
-    <div class="form-step" id="step-2" style="display:none">
+    <div class="form-step" id="step-s4" style="display:none">
+      <div class="step-question">Como você reagiu?</div>
+      <div class="step-subtext">O que você fez em resposta a esse pensamento e a essa emoção?</div>
+      <textarea id="fs-comportamento" placeholder="Ex: Fiquei em silêncio, saí mais cedo, fui comer para me distrair..." aria-label="Descreva seu comportamento"></textarea>
+    </div>
+    <div class="form-step" id="step-s5" style="display:none">
+      <div class="step-question">Por que esse pensamento parece verdadeiro?</div>
+      <div class="step-subtext">Liste fatos concretos, não sentimentos. O que realmente aconteceu que apoia esse pensamento?</div>
+      <textarea id="fs-provas-favor" placeholder="Ex: Meu chefe pausou antes de responder, isso já aconteceu antes..." aria-label="Evidências a favor"></textarea>
+    </div>
+    <div class="form-step" id="step-s6" style="display:none">
+      <div class="step-question">O que vai contra esse pensamento?</div>
+      <div class="guided-questions" role="note">
+        <p>Existe alguma prova de que isso não é totalmente verdade?</p>
+        <p>Se fosse um amigo pensando isso, o que você diria a ele?</p>
+        <p>Já houve situações em que isso não aconteceu?</p>
+      </div>
+      <textarea id="fs-provas-contra" placeholder="Ex: Já recebi elogios do mesmo chefe, meu colega disse que o relatório estava bom..." aria-label="Evidências contra"></textarea>
+    </div>
+
+    <!-- PASSOS COMPLETO (C) -->
+    <div class="form-step" id="step-c1" style="display:none">
       <div class="step-question">O que aconteceu?</div>
-      <div class="step-subtext">Descreva a situação que desencadeou esse pensamento. Onde estava? Com quem? O que foi dito ou feito?</div>
-      <textarea id="f-situacao" placeholder="Ex: Estava em uma reunião e meu chefe fez um comentário sobre meu trabalho..." aria-label="Descreva a situação"></textarea>
+      <div class="step-subtext">Descreva a situação. Onde você estava, o que foi dito ou feito, o que pode ter desencadeado o que você sentiu.</div>
+      <textarea id="fc-situacao" placeholder="Ex: Estava em uma reunião e meu chefe fez um comentário sobre meu trabalho..." aria-label="Descreva a situação"></textarea>
     </div>
-    <div class="form-step" id="step-3" style="display:none">
+    <div class="form-step" id="step-c2" style="display:none">
+      <div class="step-question">O que passou pela sua cabeça?</div>
+      <div class="step-subtext">Pensamentos automáticos surgem de forma rápida e espontânea. Escreva exatamente o que pensou, sem filtrar.</div>
+      <textarea id="fc-pensamento" placeholder="Ex: 'Nunca faço nada certo', 'Todo mundo deve ter percebido'..." aria-label="Descreva o pensamento automático"></textarea>
+      <div style="margin-top:12px;font-size:0.82rem;color:var(--muted)">Quanto você acredita nesse pensamento agora?</div>
+      <div style="margin-top:8px">
+        <input type="range" id="fc-crenca-original" min="0" max="100" value="70" aria-label="Crença no pensamento original" oninput="document.getElementById('fcv-crenca-original').textContent=this.value+'%'">
+        <div style="text-align:right;font-size:0.9rem;color:var(--accent);font-weight:700;margin-top:4px" id="fcv-crenca-original">70%</div>
+      </div>
+    </div>
+    <div class="form-step" id="step-c3" style="display:none">
       <div class="step-question">O que você sentiu?</div>
-      <div class="step-subtext">Selecione todas as emoções que apareceram e ajuste a intensidade de cada uma.</div>
-      <div class="emotion-grid" id="emotion-chips" role="group" aria-label="Selecione as emoções"></div>
-      <div class="emotion-sliders" id="emotion-sliders"></div>
+      <div class="step-subtext">Selecione as emoções e ajuste a intensidade de cada uma.</div>
+      <div class="emotion-grid" id="emotion-chips-c" role="group" aria-label="Selecione as emoções"></div>
+      <div class="emotion-sliders" id="emotion-sliders-c"></div>
     </div>
-    <div class="form-step" id="step-4" style="display:none">
-      <div class="step-question">O que você fez?</div>
-      <div class="step-subtext">Como esse pensamento e essa emoção afetaram seu comportamento?</div>
-      <textarea id="f-comportamento" placeholder="Ex: Fiquei em silêncio, saí mais cedo, fui comer para me distrair..." aria-label="Descreva seu comportamento"></textarea>
+    <div class="form-step" id="step-c4" style="display:none">
+      <div class="step-question">Como você reagiu?</div>
+      <div class="step-subtext">O que você fez em resposta a esse pensamento e a essa emoção?</div>
+      <textarea id="fc-comportamento" placeholder="Ex: Fiquei em silêncio, saí mais cedo, fui comer para me distrair..." aria-label="Descreva seu comportamento"></textarea>
     </div>
-    <div class="form-step" id="step-5" style="display:none">
-      <div class="step-question">Esse pensamento pode estar distorcido?</div>
+    <div class="form-step" id="step-c5" style="display:none">
+      <div class="step-question">Esse pensamento pode ser uma distorção?</div>
       <div class="step-subtext">Selecione as armadilhas de pensamento que você reconhece. Pode marcar mais de uma.</div>
-      <div class="distortion-grid" id="distortion-chips" role="group" aria-label="Selecione as distorções cognitivas"></div>
-      <!-- Mensagens clínicas automáticas por distorção -->
-      <div class="distortion-insight" id="distortion-insight">
-        <div class="distortion-insight-title">💬 Dicas para cada distorção identificada</div>
-        <div id="distortion-insight-list"></div>
+      <div class="distortion-grid" id="distortion-chips-c" role="group" aria-label="Selecione as distorções cognitivas"></div>
+      <div class="distortion-insight" id="distortion-insight-c">
+        <div class="distortion-insight-title">Dicas para as distorções identificadas</div>
+        <div id="distortion-insight-list-c"></div>
       </div>
     </div>
-    <div class="form-step" id="step-6" style="display:none">
-      <div class="step-question">O que faz esse pensamento parecer verdadeiro?</div>
-      <div class="step-subtext">Liste evidências reais — não sentimentos, mas fatos concretos.</div>
-      <textarea id="f-provas-favor" placeholder="Ex: Meu chefe pausou antes de responder; já aconteceu algo parecido..." aria-label="Liste as evidências a favor"></textarea>
+    <div class="form-step" id="step-c6" style="display:none">
+      <div class="step-question">Quais são as provas a favor?</div>
+      <div class="step-subtext">Liste fatos concretos que sustentam esse pensamento. Apenas evidências reais, não sentimentos.</div>
+      <textarea id="fc-provas-favor" placeholder="Ex: Meu chefe pausou antes de responder, já aconteceu algo parecido..." aria-label="Provas a favor"></textarea>
     </div>
-    <div class="form-step" id="step-7" style="display:none">
-      <div class="step-question">E o que vai contra esse pensamento?</div>
-      <div class="guided-questions" role="note" aria-label="Perguntas guia">
-        <p>→ Existe evidência de que isso não é totalmente verdade?</p>
-        <p>→ Se fosse outra pessoa, você pensaria igual?</p>
-        <p>→ Já houve situações em que isso não aconteceu?</p>
+    <div class="form-step" id="step-c7" style="display:none">
+      <div class="step-question">Quais são as provas contra?</div>
+      <div class="guided-questions" role="note">
+        <p>Existe evidência de que isso não é totalmente verdade?</p>
+        <p>Se fosse outra pessoa, você pensaria igual?</p>
+        <p>Já houve situações em que isso não aconteceu?</p>
       </div>
-      <textarea id="f-provas-contra" placeholder="Ex: Já recebi elogios do mesmo chefe; meu colega disse que o relatório estava bom..." aria-label="Liste as evidências contra"></textarea>
+      <textarea id="fc-provas-contra" placeholder="Ex: Já recebi elogios do mesmo chefe, meu colega disse que o relatório estava bom..." aria-label="Provas contra"></textarea>
     </div>
-    <div class="form-step" id="step-8" style="display:none">
-      <div class="step-question">Qual seria uma forma mais equilibrada de pensar?</div>
-      <div class="step-subtext">Não precisa ser 100% positivo — apenas mais justo e realista com você.</div>
-      <textarea id="f-novo-pensamento" placeholder="Ex: 'Errei nesse ponto, mas tenho entregado bons resultados de forma geral...'" aria-label="Escreva um novo pensamento mais equilibrado"></textarea>
+    <div class="form-step" id="step-c8" style="display:none">
+      <div class="step-question">Qual é um pensamento mais equilibrado?</div>
+      <div class="step-subtext">Não precisa ser positivo. Só mais justo e realista com você mesmo.</div>
+      <textarea id="fc-novo-pensamento" placeholder="Ex: 'Errei nesse ponto, mas tenho entregado bons resultados de forma geral...'" aria-label="Novo pensamento"></textarea>
+      <div style="margin-top:14px;font-size:0.88rem;color:var(--muted)">Quanto você acredita nesse novo pensamento?</div>
+      <div style="margin-top:8px">
+        <input type="range" id="fc-crenca-novo" min="0" max="100" value="50" aria-label="Crença no novo pensamento" oninput="document.getElementById('fcv-crenca-novo').textContent=this.value+'%'">
+        <div style="text-align:right;font-size:0.9rem;color:var(--accent);font-weight:700;margin-top:4px" id="fcv-crenca-novo">50%</div>
+      </div>
     </div>
-    <div class="form-step" id="step-9" style="display:none">
+    <div class="form-step" id="step-c9" style="display:none">
       <div class="step-question">Como você está agora?</div>
-      <div class="step-subtext">Ajuste os controles para refletir como você se sente depois de examinar o pensamento.</div>
-      <div class="context-summary" id="reass-context" role="note"></div>
+      <div class="step-subtext">Ajuste para refletir como você se sente depois de examinar o pensamento.</div>
+      <div class="context-summary" id="reass-context-c" role="note"></div>
       <div class="reass-grid">
         <div class="reass-item">
-          <div class="reass-label">Quanto você acredita no <strong>pensamento original</strong>?</div>
-          <input type="range" id="r-crenca-original" min="0" max="10" value="5" aria-label="Crença no pensamento original" oninput="updateSliderVal('r-crenca-original','rv-crenca-original')">
-          <div style="text-align:right;font-size:0.9rem;color:var(--accent);font-weight:700;margin-top:6px" id="rv-crenca-original" aria-live="polite">5</div>
-          <div class="reass-vals"><span>0 — nada</span><span>10 — completamente</span></div>
-        </div>
-        <div class="reass-item">
-          <div class="reass-label">Quanto você acredita no <strong>novo pensamento</strong>?</div>
-          <input type="range" id="r-crenca-novo" min="0" max="10" value="5" aria-label="Crença no novo pensamento" oninput="updateSliderVal('r-crenca-novo','rv-crenca-novo')">
-          <div style="text-align:right;font-size:0.9rem;color:var(--accent);font-weight:700;margin-top:6px" id="rv-crenca-novo" aria-live="polite">5</div>
-          <div class="reass-vals"><span>0 — nada</span><span>10 — completamente</span></div>
+          <div class="reass-label">Qual é a nova emoção que sinto agora?</div>
+          <div class="emotion-grid" id="emotion-chips-reass" role="group" style="margin-bottom:10px" aria-label="Nova emoção"></div>
         </div>
         <div class="reass-item">
           <div class="reass-label">Intensidade emocional <strong>antes</strong></div>
-          <input type="range" id="r-emocao-antes" min="0" max="10" value="5" aria-label="Intensidade emocional antes" oninput="updateSliderVal('r-emocao-antes','rv-emocao-antes')">
-          <div style="text-align:right;font-size:0.9rem;color:var(--accent);font-weight:700;margin-top:6px" id="rv-emocao-antes" aria-live="polite">5</div>
+          <input type="range" id="fc-emocao-antes" min="0" max="100" value="70" aria-label="Intensidade emocional antes" oninput="document.getElementById('fcv-emocao-antes').textContent=this.value+'%'">
+          <div style="text-align:right;font-size:0.9rem;color:var(--accent);font-weight:700;margin-top:4px" id="fcv-emocao-antes">70%</div>
         </div>
         <div class="reass-item">
           <div class="reass-label">Intensidade emocional <strong>agora</strong></div>
-          <input type="range" id="r-emocao-agora" min="0" max="10" value="3" aria-label="Intensidade emocional agora" oninput="updateSliderVal('r-emocao-agora','rv-emocao-agora')">
-          <div style="text-align:right;font-size:0.9rem;color:var(--accent);font-weight:700;margin-top:6px" id="rv-emocao-agora" aria-live="polite">3</div>
+          <input type="range" id="fc-emocao-agora" min="0" max="100" value="40" aria-label="Intensidade emocional agora" oninput="document.getElementById('fcv-emocao-agora').textContent=this.value+'%'">
+          <div style="text-align:right;font-size:0.9rem;color:var(--accent);font-weight:700;margin-top:4px" id="fcv-emocao-agora">40%</div>
         </div>
       </div>
     </div>
-    <div class="form-step" id="step-10" style="display:none">
+    <div class="form-step" id="step-c10" style="display:none">
       <div class="step-question">O que você pretende fazer agora?</div>
       <div class="step-subtext">Com base no pensamento mais equilibrado, como você quer agir a partir daqui?</div>
-      <textarea id="f-novo-comportamento" placeholder="Ex: Vou conversar com meu chefe para entender o feedback; vou respirar e dar uma pausa..." aria-label="Descreva o novo comportamento pretendido"></textarea>
+      <textarea id="fc-novo-comportamento" placeholder="Ex: Vou conversar com meu chefe para entender o feedback, vou respirar e dar uma pausa..." aria-label="Novo comportamento"></textarea>
     </div>
 
     <div class="validation-msg" id="validation-msg" role="alert"></div>
     <div class="step-nav">
-      <button class="btn-back" id="btn-back" onclick="prevStep()" aria-label="Voltar ao passo anterior">← Voltar</button>
+      <button class="btn-back" id="btn-back" onclick="prevStep()" aria-label="Voltar">← Voltar</button>
       <button class="btn-next" id="btn-next" onclick="nextStep()">Próximo →</button>
     </div>
   </div>
 
-  <!-- ===== MIND MAP SCREEN ===== -->
+  <!-- CONCLUSÃO -->
+  <div class="screen" id="screen-completion" role="main">
+    <div class="completion-screen">
+      <div class="completion-emoji" id="completion-emoji">🌿</div>
+      <div class="completion-title" id="completion-title">Registro salvo!</div>
+      <p class="completion-phrase" id="completion-phrase"></p>
+      <div class="completion-actions">
+        <button class="btn-secondary" id="btn-send-whatsapp" onclick="enviarWhatsAppCompletion()">💬 Enviar para o Jardel</button>
+        <button class="btn-tertiary" onclick="showScreen('home');renderHome()">Ver meus registros</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MIND MAP -->
   <div class="screen" id="screen-mindmap" role="main">
     <div class="mindmap-header">
-      <button class="mindmap-back" onclick="showScreen('home')" aria-label="Voltar para início">← Voltar</button>
-      <span class="mindmap-title">Mapa Mental do Registro</span>
+      <button class="mindmap-back" onclick="showScreen('home')" aria-label="Voltar">← Voltar</button>
+      <span class="mindmap-title">Mapa Mental</span>
     </div>
-    <canvas id="mindmap-canvas" role="img" aria-label="Mapa mental do registro de pensamento"></canvas>
+    <canvas id="mindmap-canvas" role="img" aria-label="Mapa mental do registro"></canvas>
     <div class="mindmap-actions">
-      <button class="action-btn" style="flex:1;justify-content:center" onclick="exportMindmapPDF()">📄 Exportar PDF completo</button>
-      <button class="action-btn" style="flex:1;justify-content:center;background:#25D366;color:#fff;border-color:#25D366" onclick="enviarWhatsApp()">💬 Enviar para o psicólogo</button>
+      <button class="action-btn" style="flex:1;justify-content:center" onclick="exportMindmapPDF()">📄 Exportar PDF</button>
+      <button class="action-btn whatsapp" style="flex:1;justify-content:center" onclick="enviarWhatsApp()">💬 Enviar para o Jardel</button>
     </div>
-    <p style="font-size:0.78rem;color:var(--muted);text-align:center;margin-top:10px">O PDF inclui o mapa mental e o relatório completo para o Jardel Santiago.</p>
+  </div>
+
+  <!-- BIBLIOTECA -->
+  <div class="screen" id="screen-library" role="main">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <button class="mindmap-back" onclick="showScreen('home')" aria-label="Voltar">← Voltar</button>
+      <span class="mindmap-title">Biblioteca de Apoio</span>
+    </div>
+    <div class="library-tabs">
+      <button class="lib-tab active" onclick="switchLibTab('tecnicas',this)">Técnicas</button>
+      <button class="lib-tab" onclick="switchLibTab('distorcoes',this)">Distorções</button>
+    </div>
+    <div class="lib-content active" id="lib-tecnicas"></div>
+    <div class="lib-content" id="lib-distorcoes"></div>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </div>
 
+<div id="install-banner" role="banner" aria-label="Instalar aplicativo">
+  <div class="install-text">📲 Adicionar à tela inicial<span>Use offline como um app nativo</span></div>
+  <div class="install-actions">
+    <button class="btn-install" onclick="installApp()">Instalar</button>
+    <button class="btn-install-dismiss" onclick="dismissInstall()">Agora não</button>
+  </div>
+</div>
+
 <script>
 // ============================================================
-// STATE
+// CONSTANTES
 // ============================================================
-const TOTAL_STEPS = 10;
-let currentStep = 1;
-let formData = {};
-let allRecords = [];
-let activeFilter = 'all';
-let mindmapRecord = null;
-let pacienteNome = '';
-
 const PSICO_NAME = 'Jardel Santiago';
 const PSICO_TITLE = 'Psicólogo Clínico';
+const PSICO_WHATSAPP = '5585994394944';
 
-const EMOTIONS = ['Triste','Ansioso(a)','Preocupado(a)','Com medo','Tenso(a)','Irritado(a)','Frustrado(a)','Envergonhado(a)','Culpado(a)','Sozinho(a)','Rejeitado(a)'];
+const EMOTIONS = ['Triste','Ansioso(a)','Preocupado(a)','Com medo','Tenso(a)','Irritado(a)','Frustrado(a)','Envergonhado(a)','Culpado(a)','Sozinho(a)','Rejeitado(a)','Aliviado(a)','Calmo(a)','Esperançoso(a)'];
+
+const REASS_EMOTIONS = ['Aliviado(a)','Calmo(a)','Esperançoso(a)','Ainda triste','Ainda ansioso(a)','Confuso(a)','Grato(a)'];
 
 const DISTORTIONS = [
   { name: 'Catastrofização', desc: 'Imaginar o pior cenário possível' },
   { name: 'Leitura mental', desc: 'Achar que sabe o que os outros pensam' },
-  { name: 'Generalização', desc: 'Um evento ruim se torna uma regra' },
-  { name: 'Personalização', desc: 'Assumir culpa por coisas fora do controle' },
+  { name: 'Generalização', desc: 'Um evento ruim se torna uma regra geral' },
+  { name: 'Personalização', desc: 'Assumir culpa por coisas fora do seu controle' },
   { name: 'Pensamento tudo ou nada', desc: 'Ver em extremos, sem meio-termo' },
-  { name: 'Filtro negativo', desc: 'Focar só nos aspectos negativos' },
-  { name: 'Desqualificação do positivo', desc: 'Descartar conquistas como "sorte"' },
+  { name: 'Filtro negativo', desc: 'Focar apenas nos aspectos negativos' },
+  { name: 'Desqualificação do positivo', desc: 'Descartar conquistas como sorte' },
   { name: 'Raciocínio emocional', desc: '"Me sinto mal, então deve ser verdade"' },
 ];
 
-// Mensagens clínicas por distorção cognitiva
 const DISTORTION_MESSAGES = {
-  'Catastrofização': {
-    icon: '🌊',
-    msg: 'Pergunte-se: qual a probabilidade real de o pior acontecer? Já passei por situações difíceis antes e consegui lidar — o que me diz que desta vez seria diferente?'
-  },
-  'Leitura mental': {
-    icon: '🔮',
-    msg: 'Lembre-se: não temos acesso aos pensamentos dos outros. O que você está "lendo" pode ser uma projeção do que você teme. Há evidências concretas disso, ou é suposição?'
-  },
-  'Generalização': {
-    icon: '🔁',
-    msg: 'Observe se está usando palavras como "sempre", "nunca", "todo mundo". Um evento isolado não define um padrão permanente. Quais exceções existem a essa regra que você criou?'
-  },
-  'Personalização': {
-    icon: '🎯',
-    msg: 'Muitas coisas acontecem por razões que não dependem de você. Liste outros fatores que contribuíram para essa situação além da sua ação ou omissão.'
-  },
-  'Pensamento tudo ou nada': {
-    icon: '⚖️',
-    msg: 'Existe um meio-termo entre os extremos? A maioria das situações tem gradações. Que nota de 0 a 10 você daria — provavelmente não é 0 nem 10.'
-  },
-  'Filtro negativo': {
-    icon: '🔍',
-    msg: 'Você consegue identificar alguma coisa positiva nessa situação, por menor que seja? Treinar a atenção ao neutro e ao positivo equilibra a perspectiva.'
-  },
-  'Desqualificação do positivo': {
-    icon: '🌟',
-    msg: 'Quando descartamos conquistas como sorte, negamos nossa competência. Que evidências mostram que você teve um papel ativo nesse resultado positivo?'
-  },
-  'Raciocínio emocional': {
-    icon: '💭',
-    msg: 'Sentimentos são reais, mas não são fatos. Sentir que é incapaz não significa que é. Que evidências objetivas existem — independente do que você está sentindo agora?'
-  },
+  'Catastrofização': { icon:'🌊', msg:'Qual a probabilidade real do pior cenário acontecer? Você já passou por situações difíceis antes e conseguiu lidar. O que é diferente desta vez?' },
+  'Leitura mental': { icon:'🔮', msg:'Você não tem acesso aos pensamentos dos outros. O que você está "lendo" pode ser uma projeção do que teme. Há evidências concretas ou é uma suposição?' },
+  'Generalização': { icon:'🔁', msg:'Observe se está usando palavras como "sempre", "nunca", "todo mundo". Um evento isolado não define um padrão permanente. Quais exceções existem?' },
+  'Personalização': { icon:'🎯', msg:'Muitas coisas acontecem por razões que não dependem de você. Liste outros fatores que contribuíram para essa situação além da sua ação.' },
+  'Pensamento tudo ou nada': { icon:'⚖️', msg:'Existe um meio-termo entre os extremos? A maioria das situações tem gradações. Que nota de 0 a 10 você daria? Provavelmente não é 0 nem 10.' },
+  'Filtro negativo': { icon:'🔍', msg:'Você consegue identificar algo positivo nessa situação, por menor que seja? Treinar a atenção ao neutro e ao positivo equilibra a perspectiva.' },
+  'Desqualificação do positivo': { icon:'🌟', msg:'Quando descartamos conquistas como sorte, negamos nossa competência. Que evidências mostram que você teve um papel ativo nesse resultado positivo?' },
+  'Raciocínio emocional': { icon:'💭', msg:'Sentimentos são reais, mas não são fatos. Sentir que é incapaz não significa que é. Que evidências objetivas existem, independente do que você sente agora?' },
 };
 
-const STEP_NAMES = ['Pensamento automático','Situação','Emoção','Comportamento','Distorções','Evidências a favor','Evidências contra','Novo pensamento','Reavaliação','Novo comportamento'];
+const FRASES_MOTIVACIONAIS = [
+  'Examinar um pensamento já é um ato de coragem. Você fez isso.',
+  'Cada registro é um passo em direção a se conhecer melhor.',
+  'Perceber um padrão de pensamento já muda a relação com ele.',
+  'Você dedicou tempo a si mesmo. Isso tem valor.',
+  'A TCC funciona porque você funciona. Continue assim.',
+  'Questionar o que a mente diz como verdade é uma habilidade que se fortalece com a prática.',
+  'Você não é seus pensamentos. Você é quem os observa.',
+  'Esse registro é uma prova de que você está se cuidando.',
+];
+
+const STEP_NAMES_SIMPLES = ['Situação','Emoção','Pensamento','Comportamento','Provas a favor','Provas contra'];
+const STEP_NAMES_COMPLETO = ['Situação','Pensamento','Emoção','Comportamento','Distorções','Provas a favor','Provas contra','Novo pensamento','Reavaliação','Novo comportamento'];
+
+const TECNICAS = [
+  {
+    icon:'🌬️', title:'Respiração 4-7-8',
+    intro:'Uma das técnicas mais eficazes para desacelerar o sistema nervoso em momentos de ansiedade ou tensão. Funciona ao ativar o sistema nervoso parassimpático.',
+    steps:[
+      'Sente-se confortavelmente e feche os olhos se quiser.',
+      'Inspire pelo nariz contando mentalmente até 4.',
+      'Segure o ar contando até 7.',
+      'Expire lentamente pela boca contando até 8.',
+      'Repita esse ciclo de 3 a 4 vezes.',
+    ]
+  },
+  {
+    icon:'🌿', title:'Técnica 5-4-3-2-1 (Grounding)',
+    intro:'Quando a ansiedade ou o pânico aparecem, essa técnica traz a atenção de volta para o momento presente usando os 5 sentidos.',
+    steps:[
+      'Nomeie 5 coisas que você pode ver ao redor.',
+      'Toque 4 objetos e perceba a textura de cada um.',
+      'Identifique 3 sons que você consegue ouvir agora.',
+      'Perceba 2 aromas no ambiente.',
+      'Sinta 1 sabor na boca ou beba um gole de água.',
+    ]
+  },
+  {
+    icon:'💪', title:'Respiração diafragmática',
+    intro:'Uma forma de respirar que ativa o relaxamento profundo. Muitas pessoas respiram pelo peito de forma superficial. Essa técnica corrige isso.',
+    steps:[
+      'Coloque uma mão no peito e outra no barriga.',
+      'Inspire devagar pelo nariz e sinta a barriga se expandir.',
+      'O peito deve se mover o mínimo possível.',
+      'Expire lentamente pela boca.',
+      'Repita por 5 minutos ou até sentir o corpo relaxar.',
+    ]
+  },
+  {
+    icon:'🧘', title:'Relaxamento muscular progressivo',
+    intro:'Tensionar e relaxar grupos musculares ajuda a liberar a tensão que a ansiedade acumula no corpo.',
+    steps:[
+      'Comece pelos pés: tensione por 5 segundos e solte.',
+      'Suba para as panturrilhas, tensione e solte.',
+      'Continue subindo: coxas, abdômen, mãos, braços, ombros.',
+      'Termine com o rosto: aperte os olhos e solte.',
+      'Perceba a diferença entre tensão e relaxamento.',
+    ]
+  },
+  {
+    icon:'☁️', title:'Observação de pensamentos',
+    intro:'Em vez de lutar contra pensamentos difíceis, essa técnica treina a observá-los sem se fundir com eles.',
+    steps:[
+      'Imagine que seus pensamentos são nuvens passando no céu.',
+      'Você é o céu, não as nuvens.',
+      'Observe cada pensamento sem tentar controlá-lo.',
+      'Perceba que ele surge, se move e passa.',
+      'Não precisa acreditar em tudo que a mente produz.',
+    ]
+  },
+];
+
+const DISTORTIONS_DICT = [
+  {
+    icon:'🌊', name:'Catastrofização',
+    desc:'Acontece quando a mente amplia a gravidade de uma situação e imagina o pior resultado possível, mesmo sem evidências para isso.',
+    example:'Pensamento: "Errei nessa tarefa, certamente vou ser demitido e não vou conseguir outro emprego."',
+    alt:'Versão mais equilibrada: "Errei nessa tarefa. Isso é desconfortável, mas não significa que perderei meu emprego. Posso conversar com meu gestor e corrigir."',
+  },
+  {
+    icon:'🔮', name:'Leitura mental',
+    desc:'A pessoa assume que sabe o que os outros estão pensando, geralmente de forma negativa, sem nenhuma evidência concreta.',
+    example:'Pensamento: "Ela não me respondeu logo, com certeza está brava comigo."',
+    alt:'Versão mais equilibrada: "Ela pode estar ocupada, sem bateria ou ter simplesmente esquecido. Não sei o que ela está pensando sem perguntar."',
+  },
+  {
+    icon:'🔁', name:'Generalização',
+    desc:'Um único evento negativo é tratado como uma prova de que tudo sempre acontece assim, criando uma regra absoluta.',
+    example:'Pensamento: "Fui mal nessa apresentação. Nunca consigo me expressar direito."',
+    alt:'Versão mais equilibrada: "Essa apresentação não correu como eu esperava. Isso não significa que nunca me saio bem. Posso me preparar melhor da próxima vez."',
+  },
+  {
+    icon:'🎯', name:'Personalização',
+    desc:'A pessoa assume responsabilidade excessiva por eventos que não dependem somente dela, colocando toda a culpa em si mesma.',
+    example:'Pensamento: "Meus pais brigaram. Tenho certeza que foi por causa de algo que eu fiz."',
+    alt:'Versão mais equilibrada: "Meus pais têm suas próprias questões. Eu posso ter contribuído, mas não sou o único fator nessa situação."',
+  },
+  {
+    icon:'⚖️', name:'Pensamento tudo ou nada',
+    desc:'As situações são vistas apenas em extremos, sem espaço para nuances. Ou é perfeito ou é um fracasso total.',
+    example:'Pensamento: "Se eu não for o melhor na equipe, sou um completo fracasso."',
+    alt:'Versão mais equilibrada: "Posso ser bom no que faço sem precisar ser o melhor. Há muitas gradações entre fracasso e perfeição."',
+  },
+  {
+    icon:'🔍', name:'Filtro negativo',
+    desc:'A atenção se fixa nos aspectos negativos de uma situação, ignorando ou minimizando os positivos.',
+    example:'Pensamento: "Recebi dez elogios e uma crítica. A crítica mostra que não presto."',
+    alt:'Versão mais equilibrada: "Recebi muito feedback positivo. Também recebi uma crítica que posso usar para crescer. Isso é natural."',
+  },
+  {
+    icon:'🌟', name:'Desqualificação do positivo',
+    desc:'Conquistas e qualidades são descartadas como coincidência, sorte ou algo sem importância, enquanto os negativos são valorizados.',
+    example:'Pensamento: "Me saí bem nessa entrevista, mas foi sorte. Qualquer pessoa teria feito o mesmo."',
+    alt:'Versão mais equilibrada: "Me saí bem porque me preparei e tenho competências reais. Reconhecer isso não é arrogância."',
+  },
+  {
+    icon:'💭', name:'Raciocínio emocional',
+    desc:'A pessoa usa o que sente como prova do que é verdadeiro, como se as emoções fossem fatos objetivos.',
+    example:'Pensamento: "Me sinto um fracasso, então devo ser mesmo um fracasso."',
+    alt:'Versão mais equilibrada: "Estou sentindo isso agora, mas sentimentos não são fatos. Que evidências reais tenho sobre minha competência?"',
+  },
+];
 
 // ============================================================
-// SAFE STORAGE (funciona mesmo quando localStorage está bloqueado no iPhone/Safari via file://)
+// STATE
+// ============================================================
+let currentStep = 1;
+let currentMode = 'simples'; // 'simples' | 'completo'
+let formData = {};
+let allRecords = [];
+let activeFilter = 'all';
+let mindmapRecord = null;
+let lastSavedRecord = null;
+let pacienteNome = '';
+
+const TOTAL_STEPS_SIMPLES = 6;
+const TOTAL_STEPS_COMPLETO = 10;
+
+// ============================================================
+// SAFE STORAGE
 // ============================================================
 const _memStore = {};
 const safeStorage = {
-  getItem(k) {
-    try { return localStorage.getItem(k); } catch(e) { return _memStore[k] ?? null; }
-  },
-  setItem(k, v) {
-    try { localStorage.setItem(k, v); } catch(e) { _memStore[k] = v; }
-  },
-  removeItem(k) {
-    try { localStorage.removeItem(k); } catch(e) { delete _memStore[k]; }
-  }
+  getItem(k) { try { return localStorage.getItem(k); } catch(e) { return _memStore[k] ?? null; } },
+  setItem(k, v) { try { localStorage.setItem(k, v); } catch(e) { _memStore[k] = v; } },
+  removeItem(k) { try { localStorage.removeItem(k); } catch(e) { delete _memStore[k]; } }
 };
 
 // ============================================================
@@ -698,20 +916,27 @@ const safeStorage = {
 window.addEventListener('DOMContentLoaded', () => {
   pacienteNome = safeStorage.getItem('rpd_paciente_nome') || '';
   loadRecords();
-  buildEmotionChips();
-  buildDistortionChips();
+  buildEmotionChips('emotion-chips-s');
+  buildEmotionChips('emotion-chips-c');
+  buildReassEmotionChips();
+  buildDistortionChips('distortion-chips-c', 'distortion-insight-c', 'distortion-insight-list-c');
+  buildLibrary();
   const onboarded = safeStorage.getItem('rpd_onboarded');
-  if (!onboarded || !pacienteNome) showScreen('onboarding');
+  if (!onboarded || !pacienteNome) { showScreen('onboarding'); }
   else { applyPacienteNome(); showScreen('home'); checkDraft(); }
 });
 
 function applyPacienteNome() {
-  // Update hero greeting
-  const hero = document.querySelector('.home-hero h2');
-  if (hero) hero.textContent = `Olá, ${pacienteNome}. Como você está?`;
-  // Update mindmap export note
-  const note = document.querySelector('#screen-mindmap p');
-  if (note) note.textContent = `O PDF inclui o mapa mental e o relatório completo para ${pacienteNome}.`;
+  const hero = document.getElementById('hero-greeting');
+  const greeting = getGreeting();
+  if (hero) hero.textContent = `${greeting}, ${pacienteNome}.`;
+}
+
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Bom dia';
+  if (h < 18) return 'Boa tarde';
+  return 'Boa noite';
 }
 
 // ============================================================
@@ -726,11 +951,7 @@ function showScreen(name) {
 function dismissOnboarding() {
   const input = document.getElementById('input-paciente-nome');
   const nome = input ? input.value.trim() : '';
-  if (!nome) {
-    document.getElementById('nome-error').style.display = 'block';
-    input && input.focus();
-    return;
-  }
+  if (!nome) { document.getElementById('nome-error').style.display = 'block'; input && input.focus(); return; }
   document.getElementById('nome-error').style.display = 'none';
   safeStorage.setItem('rpd_onboarded', '1');
   safeStorage.setItem('rpd_paciente_nome', nome);
@@ -742,8 +963,9 @@ function dismissOnboarding() {
 // ============================================================
 // EMOTION CHIPS
 // ============================================================
-function buildEmotionChips() {
-  const grid = document.getElementById('emotion-chips');
+function buildEmotionChips(containerId) {
+  const grid = document.getElementById(containerId);
+  if (!grid) return;
   grid.innerHTML = '';
   EMOTIONS.forEach(em => {
     const btn = document.createElement('button');
@@ -754,16 +976,38 @@ function buildEmotionChips() {
     btn.onclick = () => {
       btn.classList.toggle('selected');
       btn.setAttribute('aria-pressed', btn.classList.contains('selected') ? 'true' : 'false');
-      renderEmotionSliders();
+      const sliderId = containerId === 'emotion-chips-s' ? 'emotion-sliders-s' : 'emotion-sliders-c';
+      renderEmotionSliders(containerId, sliderId);
       saveDraft();
     };
     grid.appendChild(btn);
   });
 }
 
-function renderEmotionSliders() {
-  const selected = getSelectedEmotions();
-  const container = document.getElementById('emotion-sliders');
+function buildReassEmotionChips() {
+  const grid = document.getElementById('emotion-chips-reass');
+  if (!grid) return;
+  grid.innerHTML = '';
+  REASS_EMOTIONS.forEach(em => {
+    const btn = document.createElement('button');
+    btn.className = 'emotion-chip';
+    btn.textContent = em;
+    btn.dataset.emotion = em;
+    btn.setAttribute('aria-pressed', 'false');
+    btn.onclick = () => {
+      grid.querySelectorAll('.emotion-chip').forEach(c => { c.classList.remove('selected'); c.setAttribute('aria-pressed','false'); });
+      btn.classList.add('selected');
+      btn.setAttribute('aria-pressed', 'true');
+      saveDraft();
+    };
+    grid.appendChild(btn);
+  });
+}
+
+function renderEmotionSliders(chipsId, slidersId) {
+  const selected = getSelectedEmotions(chipsId);
+  const container = document.getElementById(slidersId);
+  if (!container) return;
   const existing = {};
   container.querySelectorAll('.emotion-slider-row').forEach(row => { existing[row.dataset.emotion] = row.querySelector('input').value; });
   container.innerHTML = '';
@@ -772,59 +1016,64 @@ function renderEmotionSliders() {
     const div = document.createElement('div');
     div.className = 'emotion-slider-row';
     div.dataset.emotion = em;
-    div.innerHTML = `<div class="emotion-slider-label"><span>${em}</span><span class="emotion-slider-val" id="esv-${slugify(em)}" aria-live="polite">${val}</span></div><input type="range" min="0" max="100" value="${val}" aria-label="Intensidade de ${em}" oninput="document.getElementById('esv-${slugify(em)}').textContent=this.value;saveDraft()">`;
+    const sid = 'esv-' + chipsId + '-' + slugify(em);
+    div.innerHTML = `<div class="emotion-slider-label"><span>${em}</span><span class="emotion-slider-val" id="${sid}">${val}%</span></div><input type="range" min="0" max="100" value="${val}" aria-label="Intensidade de ${em}" oninput="document.getElementById('${sid}').textContent=this.value+'%';saveDraft()">`;
     container.appendChild(div);
   });
 }
 
-function getSelectedEmotions() { return Array.from(document.querySelectorAll('#emotion-chips .emotion-chip.selected')).map(b => b.dataset.emotion); }
-function getEmotionIntensities() {
+function getSelectedEmotions(containerId) {
+  return Array.from(document.querySelectorAll('#' + containerId + ' .emotion-chip.selected')).map(b => b.dataset.emotion);
+}
+function getEmotionIntensities(slidersId) {
   const r = {};
-  document.querySelectorAll('#emotion-sliders .emotion-slider-row').forEach(row => { r[row.dataset.emotion] = parseInt(row.querySelector('input').value); });
+  document.querySelectorAll('#' + slidersId + ' .emotion-slider-row').forEach(row => { r[row.dataset.emotion] = parseInt(row.querySelector('input').value); });
   return r;
+}
+function getReassEmotion() {
+  const sel = document.querySelector('#emotion-chips-reass .emotion-chip.selected');
+  return sel ? sel.dataset.emotion : '';
 }
 
 // ============================================================
-// DISTORTION CHIPS + MENSAGENS AUTOMÁTICAS
+// DISTORTION CHIPS
 // ============================================================
-function buildDistortionChips() {
-  const grid = document.getElementById('distortion-chips');
+function buildDistortionChips(gridId, insightId, insightListId) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
   grid.innerHTML = '';
   DISTORTIONS.forEach(d => {
     const btn = document.createElement('button');
     btn.className = 'distortion-chip';
     btn.dataset.distortion = d.name;
     btn.setAttribute('aria-pressed', 'false');
-    btn.innerHTML = `<div class="check-icon" aria-hidden="true">✓</div><div><strong>${d.name}</strong><div class="dist-desc">${d.desc}</div></div>`;
+    btn.innerHTML = `<div class="check-icon">✓</div><div><strong>${d.name}</strong><div class="dist-desc">${d.desc}</div></div>`;
     btn.onclick = () => {
       btn.classList.toggle('selected');
       btn.setAttribute('aria-pressed', btn.classList.contains('selected') ? 'true' : 'false');
-      updateDistortionInsights();
+      updateDistortionInsights(gridId, insightId, insightListId);
       saveDraft();
     };
     grid.appendChild(btn);
   });
 }
 
-function getSelectedDistortions() {
-  return Array.from(document.querySelectorAll('#distortion-chips .distortion-chip.selected')).map(b => b.dataset.distortion);
+function getSelectedDistortions(gridId) {
+  return Array.from(document.querySelectorAll('#' + gridId + ' .distortion-chip.selected')).map(b => b.dataset.distortion);
 }
 
-function updateDistortionInsights() {
-  const selected = getSelectedDistortions();
-  const panel = document.getElementById('distortion-insight');
-  const list = document.getElementById('distortion-insight-list');
-  if (!selected.length) {
-    panel.classList.remove('show');
-    return;
-  }
+function updateDistortionInsights(gridId, insightId, insightListId) {
+  const selected = getSelectedDistortions(gridId);
+  const panel = document.getElementById(insightId);
+  const list = document.getElementById(insightListId);
+  if (!selected.length) { panel.classList.remove('show'); return; }
   list.innerHTML = '';
   selected.forEach(name => {
     const info = DISTORTION_MESSAGES[name];
     if (!info) return;
     const item = document.createElement('div');
     item.className = 'distortion-insight-item';
-    item.innerHTML = `<span aria-hidden="true">${info.icon}</span><div><strong>${name}:</strong> ${info.msg}</div>`;
+    item.innerHTML = `<span>${info.icon}</span><div><strong>${name}:</strong> ${info.msg}</div>`;
     list.appendChild(item);
   });
   panel.classList.add('show');
@@ -833,68 +1082,107 @@ function updateDistortionInsights() {
 // ============================================================
 // FORM NAV
 // ============================================================
-function startNew() { formData = {}; currentStep = 1; resetForm(); showStep(1); showScreen('form'); }
+function startNew(mode) {
+  currentMode = mode;
+  formData = {};
+  currentStep = 1;
+  resetForm();
+  updateFormBadge();
+  showStep(1);
+  showScreen('form');
+}
+
+function updateFormBadge() {
+  const badge = document.getElementById('form-mode-badge');
+  if (currentMode === 'simples') { badge.textContent = '🌱 Registro Simples'; badge.style.background = 'var(--success)'; }
+  else { badge.textContent = '🧠 Registro Completo'; badge.style.background = 'var(--accent3)'; }
+}
 
 function resetForm() {
-  ['f-situacao','f-pensamento','f-comportamento','f-provas-favor','f-provas-contra','f-novo-pensamento','f-novo-comportamento'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
+  const ids = ['fs-situacao','fs-pensamento','fs-comportamento','fs-provas-favor','fs-provas-contra',
+                'fc-situacao','fc-pensamento','fc-comportamento','fc-provas-favor','fc-provas-contra','fc-novo-pensamento','fc-novo-comportamento'];
+  ids.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  ['emotion-chips-s','emotion-chips-c'].forEach(cid => {
+    document.querySelectorAll('#' + cid + ' .emotion-chip').forEach(e => { e.classList.remove('selected'); e.setAttribute('aria-pressed','false'); });
   });
-  document.querySelectorAll('.emotion-chip.selected').forEach(e => { e.classList.remove('selected'); e.setAttribute('aria-pressed', 'false'); });
-  document.querySelectorAll('.distortion-chip.selected').forEach(e => { e.classList.remove('selected'); e.setAttribute('aria-pressed', 'false'); });
-  document.getElementById('emotion-sliders').innerHTML = '';
-  document.getElementById('distortion-insight').classList.remove('show');
-  [['r-crenca-original',5],['r-crenca-novo',5],['r-emocao-antes',5],['r-emocao-agora',3]].forEach(([id,v]) => {
-    const el = document.getElementById(id); if (el) el.value = v;
-    const ve = document.getElementById(id.replace('r-','rv-')); if (ve) ve.textContent = v;
+  ['distortion-chips-c'].forEach(gid => {
+    document.querySelectorAll('#' + gid + ' .distortion-chip').forEach(e => { e.classList.remove('selected'); e.setAttribute('aria-pressed','false'); });
+  });
+  document.getElementById('emotion-sliders-s').innerHTML = '';
+  document.getElementById('emotion-sliders-c').innerHTML = '';
+  document.getElementById('distortion-insight-c').classList.remove('show');
+  document.querySelectorAll('#emotion-chips-reass .emotion-chip').forEach(e => { e.classList.remove('selected'); e.setAttribute('aria-pressed','false'); });
+  ['fc-crenca-original','fc-crenca-novo','fc-emocao-antes','fc-emocao-agora'].forEach(id => {
+    const el = document.getElementById(id); if (!el) return;
+    const def = id.includes('agora') ? 40 : 70;
+    el.value = def;
+    const vid = id.replace('fc-','fcv-');
+    const vel = document.getElementById(vid); if (vel) vel.textContent = def + '%';
   });
   hideValidation();
 }
 
+function getTotalSteps() { return currentMode === 'simples' ? TOTAL_STEPS_SIMPLES : TOTAL_STEPS_COMPLETO; }
+function getStepNames() { return currentMode === 'simples' ? STEP_NAMES_SIMPLES : STEP_NAMES_COMPLETO; }
+function getStepId(n) { return currentMode === 'simples' ? 'step-s' + n : 'step-c' + n; }
+
 function showStep(n) {
   document.querySelectorAll('.form-step').forEach(s => s.style.display = 'none');
-  document.getElementById('step-' + n).style.display = 'block';
-  const pct = Math.round((n / TOTAL_STEPS) * 100);
+  const el = document.getElementById(getStepId(n));
+  if (el) el.style.display = 'block';
+  const total = getTotalSteps();
+  const pct = Math.round((n / total) * 100);
   document.getElementById('progress-bar').style.width = pct + '%';
-  const pb = document.querySelector('.progress-bar-wrap');
-  if (pb) pb.setAttribute('aria-valuenow', pct);
-  document.getElementById('step-fraction').textContent = n + ' de ' + TOTAL_STEPS;
-  document.getElementById('step-name').textContent = STEP_NAMES[n-1];
+  document.getElementById('step-fraction').textContent = n + ' de ' + total;
+  const names = getStepNames();
+  document.getElementById('step-name').textContent = names[n-1] || '';
   document.getElementById('btn-back').style.visibility = n === 1 ? 'hidden' : 'visible';
-  document.getElementById('btn-next').textContent = n === TOTAL_STEPS ? '✦ Salvar registro' : 'Próximo →';
-  if (n === 9) fillReassContext();
+  document.getElementById('btn-next').textContent = n === total ? '✦ Salvar registro' : 'Próximo →';
+  if (n === 9 && currentMode === 'completo') fillReassContext();
   hideValidation();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function fillReassContext() {
-  const p = document.getElementById('f-pensamento').value.trim();
-  const e = getSelectedEmotions();
-  const ctx = document.getElementById('reass-context');
-  ctx.innerHTML = p ? `<strong>Pensamento examinado:</strong> "${esc(p)}"${e.length ? '<br><strong>Emoções:</strong> '+e.join(', ') : ''}` : '';
+  const p = document.getElementById('fc-pensamento') ? document.getElementById('fc-pensamento').value.trim() : '';
+  const ctx = document.getElementById('reass-context-c');
+  if (ctx && p) ctx.innerHTML = `<strong>Pensamento examinado:</strong> "${esc(p)}"`;
 }
 
 function nextStep() {
   if (!validateStep(currentStep)) return;
-  collectStepData(currentStep); saveDraft();
-  if (currentStep === TOTAL_STEPS) { saveRecord(); return; }
-  currentStep++; showStep(currentStep);
+  collectStepData(currentStep);
+  saveDraft();
+  if (currentStep === getTotalSteps()) { saveRecord(); return; }
+  currentStep++;
+  showStep(currentStep);
 }
-function prevStep() { if (currentStep === 1) { showScreen('home'); return; } currentStep--; showStep(currentStep); }
-function updateSliderVal(a, b) { document.getElementById(b).textContent = document.getElementById(a).value; saveDraft(); }
+
+function prevStep() {
+  if (currentStep === 1) { showScreen('home'); return; }
+  currentStep--;
+  showStep(currentStep);
+}
 
 // ============================================================
 // VALIDATION
 // ============================================================
 function validateStep(n) {
-  const req = { 1:'f-pensamento', 2:'f-situacao', 4:'f-comportamento', 6:'f-provas-favor', 7:'f-provas-contra', 8:'f-novo-pensamento', 10:'f-novo-comportamento' };
-  if (req[n] && !document.getElementById(req[n]).value.trim()) { showValidation(); return false; }
-  if (n === 3 && getSelectedEmotions().length === 0) { showValidation('Selecione ao menos uma emoção para continuar.'); return false; }
+  if (currentMode === 'simples') {
+    const req = { 1:'fs-situacao', 3:'fs-pensamento', 4:'fs-comportamento', 5:'fs-provas-favor', 6:'fs-provas-contra' };
+    if (req[n] && !document.getElementById(req[n]).value.trim()) { showValidation(); return false; }
+    if (n === 2 && getSelectedEmotions('emotion-chips-s').length === 0) { showValidation('Selecione ao menos uma emoção para continuar.'); return false; }
+  } else {
+    const req = { 1:'fc-situacao', 2:'fc-pensamento', 4:'fc-comportamento', 6:'fc-provas-favor', 7:'fc-provas-contra', 8:'fc-novo-pensamento', 10:'fc-novo-comportamento' };
+    if (req[n] && !document.getElementById(req[n]).value.trim()) { showValidation(); return false; }
+    if (n === 3 && getSelectedEmotions('emotion-chips-c').length === 0) { showValidation('Selecione ao menos uma emoção para continuar.'); return false; }
+  }
   return true;
 }
+
 function showValidation(msg) {
   const el = document.getElementById('validation-msg');
-  el.textContent = msg || '💬 Tente escrever ao menos uma palavra — não precisa ser perfeito. Este espaço é só seu.';
+  el.textContent = msg || 'Tente escrever ao menos uma palavra. Este espaço é só seu, não precisa ser perfeito.';
   el.classList.add('show');
 }
 function hideValidation() { document.getElementById('validation-msg').classList.remove('show'); }
@@ -903,36 +1191,58 @@ function hideValidation() { document.getElementById('validation-msg').classList.
 // DATA COLLECTION
 // ============================================================
 function collectStepData(n) {
-  if (n===1) formData.pensamento = document.getElementById('f-pensamento').value.trim();
-  if (n===2) formData.situacao = document.getElementById('f-situacao').value.trim();
-  if (n===3) { formData.emocoes = getSelectedEmotions(); formData.intensidades = getEmotionIntensities(); }
-  if (n===4) formData.comportamento = document.getElementById('f-comportamento').value.trim();
-  if (n===5) formData.distorcoes = getSelectedDistortions();
-  if (n===6) formData.provasFavor = document.getElementById('f-provas-favor').value.trim();
-  if (n===7) formData.provasContra = document.getElementById('f-provas-contra').value.trim();
-  if (n===8) formData.novoPensamento = document.getElementById('f-novo-pensamento').value.trim();
-  if (n===9) {
-    formData.crencaOriginal = parseInt(document.getElementById('r-crenca-original').value);
-    formData.crencaNovo = parseInt(document.getElementById('r-crenca-novo').value);
-    formData.emocaoAntes = parseInt(document.getElementById('r-emocao-antes').value);
-    formData.emocaoAgora = parseInt(document.getElementById('r-emocao-agora').value);
+  if (currentMode === 'simples') {
+    if (n===1) formData.situacao = document.getElementById('fs-situacao').value.trim();
+    if (n===2) { formData.emocoes = getSelectedEmotions('emotion-chips-s'); formData.intensidades = getEmotionIntensities('emotion-sliders-s'); }
+    if (n===3) formData.pensamento = document.getElementById('fs-pensamento').value.trim();
+    if (n===4) formData.comportamento = document.getElementById('fs-comportamento').value.trim();
+    if (n===5) formData.provasFavor = document.getElementById('fs-provas-favor').value.trim();
+    if (n===6) formData.provasContra = document.getElementById('fs-provas-contra').value.trim();
+  } else {
+    if (n===1) formData.situacao = document.getElementById('fc-situacao').value.trim();
+    if (n===2) { formData.pensamento = document.getElementById('fc-pensamento').value.trim(); formData.crencaOriginal = parseInt(document.getElementById('fc-crenca-original').value); }
+    if (n===3) { formData.emocoes = getSelectedEmotions('emotion-chips-c'); formData.intensidades = getEmotionIntensities('emotion-sliders-c'); }
+    if (n===4) formData.comportamento = document.getElementById('fc-comportamento').value.trim();
+    if (n===5) formData.distorcoes = getSelectedDistortions('distortion-chips-c');
+    if (n===6) formData.provasFavor = document.getElementById('fc-provas-favor').value.trim();
+    if (n===7) formData.provasContra = document.getElementById('fc-provas-contra').value.trim();
+    if (n===8) { formData.novoPensamento = document.getElementById('fc-novo-pensamento').value.trim(); formData.crencaNovo = parseInt(document.getElementById('fc-crenca-novo').value); }
+    if (n===9) { formData.novaEmocao = getReassEmotion(); formData.emocaoAntes = parseInt(document.getElementById('fc-emocao-antes').value); formData.emocaoAgora = parseInt(document.getElementById('fc-emocao-agora').value); }
+    if (n===10) formData.novoComportamento = document.getElementById('fc-novo-comportamento').value.trim();
   }
-  if (n===10) formData.novoComportamento = document.getElementById('f-novo-comportamento').value.trim();
 }
-function collectAll() { for (let i=1; i<=TOTAL_STEPS; i++) collectStepData(i); }
+
+function collectAll() { for (let i = 1; i <= getTotalSteps(); i++) collectStepData(i); }
 
 // ============================================================
 // SAVE RECORD
 // ============================================================
 function saveRecord() {
   collectAll();
-  const record = { id: Date.now().toString(), date: new Date().toISOString(), pacienteNome: pacienteNome, ...formData };
+  const record = {
+    id: Date.now().toString(),
+    date: new Date().toISOString(),
+    pacienteNome: pacienteNome,
+    modo: currentMode,
+    ...formData
+  };
   allRecords.unshift(record);
   safeStorage.setItem('rpd_records', JSON.stringify(allRecords));
   safeStorage.removeItem('rpd_draft');
-  showScreen('home'); renderHome();
-  showToast('✦ Registro salvo!');
-  setTimeout(() => { openMindmap(record.id); }, 700);
+  lastSavedRecord = record;
+  showCompletionScreen(record);
+}
+
+function showCompletionScreen(record) {
+  const frase = FRASES_MOTIVACIONAIS[Math.floor(Math.random() * FRASES_MOTIVACIONAIS.length)];
+  document.getElementById('completion-phrase').textContent = '"' + frase + '"';
+  document.getElementById('completion-emoji').textContent = record.modo === 'simples' ? '🌱' : '🧠';
+  document.getElementById('completion-title').textContent = 'Registro salvo, ' + pacienteNome + '!';
+  showScreen('completion');
+}
+
+function enviarWhatsAppCompletion() {
+  if (lastSavedRecord) enviarWhatsAppRecord(lastSavedRecord);
 }
 
 // ============================================================
@@ -940,17 +1250,18 @@ function saveRecord() {
 // ============================================================
 function saveDraft() {
   if (currentStep < 1) return;
-  const draft = { step: currentStep, data: {
-    pensamento: document.getElementById('f-pensamento').value,
-    situacao: document.getElementById('f-situacao').value,
-    emocoes: getSelectedEmotions(), intensidades: getEmotionIntensities(),
-    comportamento: document.getElementById('f-comportamento').value,
-    distorcoes: getSelectedDistortions(),
-    provasFavor: document.getElementById('f-provas-favor').value,
-    provasContra: document.getElementById('f-provas-contra').value,
-    novoPensamento: document.getElementById('f-novo-pensamento').value,
-    novoComportamento: document.getElementById('f-novo-comportamento').value,
-  }};
+  const draft = {
+    step: currentStep, mode: currentMode,
+    data: {
+      situacao: (document.getElementById('fs-situacao')||{}).value || (document.getElementById('fc-situacao')||{}).value || '',
+      pensamento: (document.getElementById('fs-pensamento')||{}).value || (document.getElementById('fc-pensamento')||{}).value || '',
+      comportamento: (document.getElementById('fs-comportamento')||{}).value || (document.getElementById('fc-comportamento')||{}).value || '',
+      provasFavor: (document.getElementById('fs-provas-favor')||{}).value || (document.getElementById('fc-provas-favor')||{}).value || '',
+      provasContra: (document.getElementById('fs-provas-contra')||{}).value || (document.getElementById('fc-provas-contra')||{}).value || '',
+      novoPensamento: (document.getElementById('fc-novo-pensamento')||{}).value || '',
+      novoComportamento: (document.getElementById('fc-novo-comportamento')||{}).value || '',
+    }
+  };
   safeStorage.setItem('rpd_draft', JSON.stringify(draft));
 }
 
@@ -961,33 +1272,16 @@ function checkDraft() {
 function resumeDraft() {
   try {
     const draft = JSON.parse(safeStorage.getItem('rpd_draft'));
-    formData = draft.data || {}; currentStep = draft.step || 1; resetForm();
+    formData = draft.data || {}; currentMode = draft.mode || 'simples'; currentStep = draft.step || 1;
+    resetForm(); updateFormBadge();
     const fd = formData;
-    if (fd.situacao) document.getElementById('f-situacao').value = fd.situacao;
-    if (fd.pensamento) document.getElementById('f-pensamento').value = fd.pensamento;
-    if (fd.comportamento) document.getElementById('f-comportamento').value = fd.comportamento;
-    if (fd.provasFavor) document.getElementById('f-provas-favor').value = fd.provasFavor;
-    if (fd.provasContra) document.getElementById('f-provas-contra').value = fd.provasContra;
-    if (fd.novoPensamento) document.getElementById('f-novo-pensamento').value = fd.novoPensamento;
-    if (fd.novoComportamento) document.getElementById('f-novo-comportamento').value = fd.novoComportamento;
-    if (fd.emocoes) {
-      fd.emocoes.forEach(em => { document.querySelectorAll('.emotion-chip').forEach(ch => { if (ch.dataset.emotion === em) { ch.classList.add('selected'); ch.setAttribute('aria-pressed','true'); } }); });
-      renderEmotionSliders();
-      if (fd.intensidades) {
-        document.querySelectorAll('#emotion-sliders .emotion-slider-row').forEach(row => {
-          const em = row.dataset.emotion;
-          if (fd.intensidades[em] !== undefined) { row.querySelector('input').value = fd.intensidades[em]; const el = document.getElementById('esv-'+slugify(em)); if (el) el.textContent = fd.intensidades[em]; }
-        });
-      }
-    }
-    if (fd.distorcoes) {
-      fd.distorcoes.forEach(d => {
-        document.querySelectorAll('.distortion-chip').forEach(ch => {
-          if (ch.dataset.distortion === d) { ch.classList.add('selected'); ch.setAttribute('aria-pressed','true'); }
-        });
-      });
-      updateDistortionInsights();
-    }
+    const prefix = currentMode === 'simples' ? 'fs' : 'fc';
+    ['situacao','pensamento','comportamento','provasFavor','provasContra','novoPensamento','novoComportamento'].forEach(key => {
+      const camel = key.charAt(0).toUpperCase() + key.slice(1);
+      const elId = prefix + '-' + key.toLowerCase().replace(/([A-Z])/g, c => '-' + c.toLowerCase());
+      const el = document.getElementById(elId);
+      if (el && fd[key]) el.value = fd[key];
+    });
     document.getElementById('draft-banner').style.display = 'none';
     showStep(currentStep); showScreen('form');
   } catch(e) { console.error(e); }
@@ -1003,24 +1297,80 @@ function loadRecords() {
   renderHome();
 }
 
-function renderHome() { renderInsights(); renderFilters(); renderRecordList(); renderEvolutionChart(); }
+function renderHome() {
+  renderAchievements();
+  renderInsights();
+  renderFilters();
+  renderRecordList();
+  renderEvolutionChart();
+  const secTitle = document.getElementById('records-section-title');
+  if (secTitle) secTitle.style.display = allRecords.length ? 'block' : 'none';
+}
 
 // ============================================================
-// INSIGHTS AUTOMÁTICOS
+// CONQUISTAS
+// ============================================================
+function renderAchievements() {
+  const area = document.getElementById('achievements-area');
+  const row = document.getElementById('achievements-row');
+  if (!allRecords.length) { area.style.display = 'none'; return; }
+
+  const streak = calcStreak();
+  const total = allRecords.length;
+  const distCount = {};
+  allRecords.forEach(r => (r.distorcoes||[]).forEach(d => { distCount[d] = (distCount[d]||0)+1; }));
+  const topDist = Object.entries(distCount).sort((a,b)=>b[1]-a[1])[0];
+
+  row.innerHTML = '';
+  const items = [
+    { icon: streak >= 3 ? '🔥' : '📅', val: streak, label: streak === 1 ? 'dia seguido' : 'dias seguidos' },
+    { icon: '📝', val: total, label: total === 1 ? 'registro' : 'registros' },
+  ];
+  if (topDist) items.push({ icon: '🔍', val: topDist[1], label: topDist[0].length > 12 ? topDist[0].slice(0,12)+'…' : topDist[0] });
+
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'achievement-card';
+    card.innerHTML = `<div class="achievement-icon">${item.icon}</div><div class="achievement-val">${item.val}</div><div class="achievement-label">${item.label}</div>`;
+    row.appendChild(card);
+  });
+  area.style.display = 'block';
+}
+
+function calcStreak() {
+  if (!allRecords.length) return 0;
+  const days = [...new Set(allRecords.map(r => r.date.slice(0,10)))].sort().reverse();
+  if (!days.length) return 0;
+  let streak = 1;
+  const today = new Date().toISOString().slice(0,10);
+  if (days[0] !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+    if (days[0] !== yesterday) return 0;
+  }
+  for (let i = 1; i < days.length; i++) {
+    const prev = new Date(days[i-1]);
+    const curr = new Date(days[i]);
+    const diff = (prev - curr) / 86400000;
+    if (diff === 1) streak++;
+    else break;
+  }
+  return streak;
+}
+
+// ============================================================
+// INSIGHTS RICOS
 // ============================================================
 function renderInsights() {
   const banner = document.getElementById('insights-banner');
   const list = document.getElementById('insights-list');
   if (allRecords.length < 2) { banner.style.display = 'none'; return; }
-
   const insights = generateInsights(allRecords);
   if (!insights.length) { banner.style.display = 'none'; return; }
-
   list.innerHTML = '';
   insights.forEach(ins => {
     const item = document.createElement('div');
     item.className = 'insight-item';
-    item.innerHTML = `<span class="insight-icon" aria-hidden="true">${ins.icon}</span><span>${ins.text}</span>`;
+    item.innerHTML = `<span class="insight-icon">${ins.icon}</span><span>${ins.text}</span>`;
     list.appendChild(item);
   });
   banner.style.display = 'block';
@@ -1030,48 +1380,58 @@ function generateInsights(records) {
   const insights = [];
   const n = records.length;
 
-  // Distorção mais frequente
+  // Distorção mais frequente com contexto
   const distCount = {};
-  records.forEach(r => (r.distorcoes||[]).forEach(d => { distCount[d] = (distCount[d]||0) + 1; }));
-  const topDist = Object.entries(distCount).sort((a,b) => b[1]-a[1])[0];
+  records.forEach(r => (r.distorcoes||[]).forEach(d => { distCount[d] = (distCount[d]||0)+1; }));
+  const topDist = Object.entries(distCount).sort((a,b)=>b[1]-a[1])[0];
   if (topDist && topDist[1] >= 2) {
-    insights.push({ icon: '🔁', text: `<strong>${topDist[0]}</strong> aparece em ${topDist[1]} registros. Esse padrão merece atenção especial na próxima sessão.` });
+    const pct = Math.round((topDist[1]/n)*100);
+    insights.push({ icon:'🔁', text:`<strong>${topDist[0]}</strong> aparece em ${topDist[1]} dos seus registros. Esse padrão costuma merecer atenção especial nas sessões com o Jardel.` });
   }
 
-  // Emoção mais frequente
+  // Emoção mais frequente com variação
   const emCount = {};
-  records.forEach(r => (r.emocoes||[]).forEach(e => { emCount[e] = (emCount[e]||0) + 1; }));
-  const topEm = Object.entries(emCount).sort((a,b) => b[1]-a[1])[0];
+  records.forEach(r => (r.emocoes||[]).forEach(e => { emCount[e] = (emCount[e]||0)+1; }));
+  const topEm = Object.entries(emCount).sort((a,b)=>b[1]-a[1])[0];
   if (topEm && topEm[1] >= 2) {
-    insights.push({ icon: '🫀', text: `A emoção mais registrada é <strong>${topEm[0]}</strong> (${topEm[1]}x). Observar o contexto dessas situações pode revelar gatilhos.` });
+    insights.push({ icon:'🫀', text:`A emoção que aparece com mais frequência é <strong>${topEm[0]}</strong>. Observar as situações ligadas a ela pode revelar gatilhos importantes.` });
   }
 
-  // Melhora emocional média
+  // Redução emocional
   const withBoth = records.filter(r => r.emocaoAntes != null && r.emocaoAgora != null);
   if (withBoth.length >= 2) {
-    const avgBefore = withBoth.reduce((s,r) => s + r.emocaoAntes, 0) / withBoth.length;
-    const avgAfter = withBoth.reduce((s,r) => s + r.emocaoAgora, 0) / withBoth.length;
-    const diff = (avgBefore - avgAfter).toFixed(1);
+    const avgBefore = withBoth.reduce((s,r)=>s+r.emocaoAntes,0)/withBoth.length;
+    const avgAfter = withBoth.reduce((s,r)=>s+r.emocaoAgora,0)/withBoth.length;
+    const diff = (avgBefore - avgAfter).toFixed(0);
     if (diff > 0) {
-      insights.push({ icon: '📉', text: `Em média, a intensidade emocional reduz <strong>${diff} pontos</strong> após completar o registro. O processo está funcionando.` });
+      insights.push({ icon:'📉', text:`Depois de completar o registro completo, a intensidade emocional cai em média <strong>${diff}%</strong>. Isso mostra que o processo de examinar o pensamento está funcionando.` });
     }
   }
 
   // Consistência
-  if (n >= 5) {
-    insights.push({ icon: '🏅', text: `Você tem <strong>${n} registros</strong> salvos. Consistência é um dos maiores fatores de eficácia na TCC.` });
-  } else if (n >= 3) {
-    insights.push({ icon: '🌱', text: `<strong>${n} registros</strong> completados. Cada registro fortalece a sua capacidade de examinar pensamentos.` });
+  const streak = calcStreak();
+  if (streak >= 3) {
+    insights.push({ icon:'🔥', text:`Você está em uma sequência de <strong>${streak} dias</strong> registrando. Consistência é um dos maiores fatores de mudança na TCC.` });
+  } else if (n >= 5) {
+    insights.push({ icon:'🏅', text:`Você já completou <strong>${n} registros</strong>. Cada um deles representa um momento em que você escolheu examinar o que sentia ao invés de só reagir.` });
   }
 
-  // Crença no novo pensamento
+  // Evolução da crença
   const withBelief = records.filter(r => r.crencaNovo != null && r.crencaOriginal != null);
   if (withBelief.length >= 2) {
-    const avgNovo = withBelief.reduce((s,r) => s + r.crencaNovo, 0) / withBelief.length;
-    const avgOrig = withBelief.reduce((s,r) => s + r.crencaOriginal, 0) / withBelief.length;
-    if (avgNovo > avgOrig) {
-      insights.push({ icon: '💡', text: `Em média, a crença no <strong>novo pensamento</strong> (${avgNovo.toFixed(1)}/10) supera a crença no original (${avgOrig.toFixed(1)}/10). Sua reestruturação cognitiva está sendo eficaz.` });
+    const avgNovo = withBelief.reduce((s,r)=>s+r.crencaNovo,0)/withBelief.length;
+    const avgOrig = withBelief.reduce((s,r)=>s+r.crencaOriginal,0)/withBelief.length;
+    if (avgNovo < avgOrig) {
+      const diff = (avgOrig - avgNovo).toFixed(0);
+      insights.push({ icon:'💡', text:`Em média, a crença no pensamento original cai <strong>${diff}%</strong> após a reestruturação. Sua capacidade de questionar pensamentos está crescendo.` });
     }
+  }
+
+  // Mistura de modos
+  const simples = records.filter(r=>r.modo==='simples').length;
+  const completo = records.filter(r=>r.modo==='completo').length;
+  if (simples >= 1 && completo >= 1) {
+    insights.push({ icon:'🌱', text:`Você tem usado os dois tipos de registro. Isso é ótimo. O simples ajuda no dia a dia e o completo aprofunda o trabalho nas sessões.` });
   }
 
   return insights.slice(0, 3);
@@ -1082,20 +1442,18 @@ function generateInsights(records) {
 // ============================================================
 function renderFilters() {
   const area = document.getElementById('filter-area');
-  const allEmotions = [...new Set(allRecords.flatMap(r => r.emocoes || []))];
+  const allEmotions = [...new Set(allRecords.flatMap(r => r.emocoes||[]))];
   if (!allEmotions.length) { area.innerHTML = ''; return; }
   area.innerHTML = '';
   const allBtn = document.createElement('button');
   allBtn.className = 'filter-chip' + (activeFilter==='all'?' active':'');
   allBtn.textContent = 'Todos';
-  allBtn.setAttribute('aria-pressed', activeFilter==='all' ? 'true' : 'false');
   allBtn.onclick = () => { activeFilter = 'all'; renderHome(); };
   area.appendChild(allBtn);
   allEmotions.slice(0,6).forEach(em => {
     const btn = document.createElement('button');
     btn.className = 'filter-chip' + (activeFilter===em?' active':'');
     btn.textContent = em;
-    btn.setAttribute('aria-pressed', activeFilter===em ? 'true' : 'false');
     btn.onclick = () => { activeFilter = em; renderHome(); };
     area.appendChild(btn);
   });
@@ -1106,9 +1464,9 @@ function renderFilters() {
 // ============================================================
 function renderRecordList() {
   const container = document.getElementById('record-list');
-  const filtered = activeFilter === 'all' ? allRecords : allRecords.filter(r => (r.emocoes||[]).includes(activeFilter));
+  const filtered = activeFilter === 'all' ? allRecords : allRecords.filter(r=>(r.emocoes||[]).includes(activeFilter));
   if (!filtered.length) {
-    container.innerHTML = `<div class="empty-state"><div class="empty-icon" aria-hidden="true">🌱</div><p>${allRecords.length===0?'Nenhum registro ainda.<br>Crie seu primeiro registro acima.':'Nenhum registro com esse filtro.'}</p></div>`;
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🌱</div><p>${allRecords.length===0?'Nenhum registro ainda.<br>Crie seu primeiro registro acima.':'Nenhum registro com esse filtro.'}</p></div>`;
     return;
   }
   container.innerHTML = '';
@@ -1123,61 +1481,49 @@ function buildRecordCard(r) {
   const d = new Date(r.date);
   const dateStr = d.toLocaleDateString('pt-BR', { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
   const mainEmotion = (r.emocoes && r.emocoes[0]) || '—';
+  const modeLabel = r.modo === 'simples' ? 'Simples' : 'Completo';
   const before = r.emocaoAntes ?? null, after = r.emocaoAgora ?? null;
   const baHTML = (before!==null && after!==null) ? `<div class="ba-chart">
-    <div class="ba-row"><span class="ba-label">Antes</span><div class="intensity-track"><div class="intensity-fill" style="width:${before*10}%" role="presentation"></div></div><span class="intensity-num" aria-label="Intensidade antes: ${before} de 10">${before}/10</span></div>
-    <div class="ba-row"><span class="ba-label">Depois</span><div class="intensity-track"><div class="intensity-fill" style="width:${after*10}%;background:linear-gradient(90deg,#7aab6e,#3d6b35)" role="presentation"></div></div><span class="intensity-num" aria-label="Intensidade depois: ${after} de 10">${after}/10</span></div>
+    <div class="ba-row"><span class="ba-label">Antes</span><div class="intensity-track"><div class="intensity-fill" style="width:${before}%"></div></div><span class="intensity-num">${before}%</span></div>
+    <div class="ba-row"><span class="ba-label">Depois</span><div class="intensity-track"><div class="intensity-fill" style="width:${after}%;background:linear-gradient(90deg,#7aab6e,#3d6b35)"></div></div><span class="intensity-num">${after}%</span></div>
   </div>` : '';
-
-  // Nota clínica baseada em distorções
-  const clinicalNote = buildClinicalNote(r);
 
   card.innerHTML = `
     <div class="record-card-top">
       <span class="record-date">${dateStr}</span>
-      <span class="emotion-badge">🫀 ${mainEmotion}</span>
+      <div class="record-badges">
+        <span class="mode-badge">${r.modo === 'simples' ? '🌱' : '🧠'} ${modeLabel}</span>
+        <span class="emotion-badge">🫀 ${mainEmotion}</span>
+      </div>
     </div>
     <div class="record-situation">${esc(r.situacao||'')}</div>
     <button class="record-expand" onclick="toggleCard('${r.id}')" aria-expanded="false" aria-controls="details-${r.id}"><span id="expand-lbl-${r.id}">Ver mais ↓</span></button>
     <div class="record-details" id="details-${r.id}" aria-hidden="true">
       ${buildDetailRows(r)}
-      ${clinicalNote}
       ${baHTML}
       <div class="card-actions">
+        <button class="action-btn whatsapp" onclick="enviarWhatsAppRecord(allRecords.find(x=>x.id==='${r.id}'))">💬 Enviar para o Jardel</button>
         <button class="action-btn" onclick="openMindmap('${r.id}')">🗺 Mapa Mental</button>
-        <button class="action-btn" onclick="exportPDF('${r.id}')">📄 Exportar PDF</button>
+        <button class="action-btn" onclick="exportPDF('${r.id}')">📄 PDF</button>
         <button class="action-btn danger" onclick="deleteRecord('${r.id}')">🗑 Excluir</button>
       </div>
     </div>`;
   return card;
 }
 
-function buildClinicalNote(r) {
-  const distorcoes = r.distorcoes || [];
-  if (!distorcoes.length) return '';
-
-  // Gera nota baseada na distorção mais comum ou na primeira
-  const mainDist = distorcoes[0];
-  const info = DISTORTION_MESSAGES[mainDist];
-  if (!info) return '';
-
-  return `<div class="clinical-note" role="note" aria-label="Reflexão clínica">
-    <span class="clinical-note-icon" aria-hidden="true">${info.icon}</span>
-    <div><strong>${mainDist}:</strong> ${info.msg}</div>
-  </div>`;
-}
-
 function buildDetailRows(r) {
-  return [
-    { label: 'Pensamento automático', val: r.pensamento },
-    { label: 'Emoções', val: (r.emocoes||[]).map(em=>`${em} (${(r.intensidades||{})[em]||0}/100)`).join(', ') },
-    { label: 'Comportamento', val: r.comportamento },
-    { label: 'Distorções', val: (r.distorcoes||[]).join(', ') },
-    { label: 'Evidências a favor', val: r.provasFavor },
-    { label: 'Evidências contra', val: r.provasContra },
-    { label: 'Novo pensamento', val: r.novoPensamento },
-    { label: 'Novo comportamento', val: r.novoComportamento },
-  ].map(row => row.val ? `<div class="detail-row"><span class="detail-label">${row.label}</span><span class="detail-value">${esc(row.val)}</span></div>` : '').join('');
+  const rows = [
+    { label:'Situação', val: r.situacao },
+    { label:'Pensamento automático', val: r.pensamento },
+    { label:'Emoções', val: (r.emocoes||[]).map(em=>`${em} (${(r.intensidades||{})[em]||0}%)`).join(', ') },
+    { label:'Comportamento', val: r.comportamento },
+    { label:'Distorções', val: (r.distorcoes||[]).join(', ') },
+    { label:'Provas a favor', val: r.provasFavor },
+    { label:'Provas contra', val: r.provasContra },
+    { label:'Novo pensamento', val: r.novoPensamento },
+    { label:'Novo comportamento', val: r.novoComportamento },
+  ];
+  return rows.map(row => row.val ? `<div class="detail-row"><span class="detail-label">${row.label}</span><span class="detail-value">${esc(row.val)}</span></div>` : '').join('');
 }
 
 function toggleCard(id) {
@@ -1204,576 +1550,467 @@ function deleteRecord(id) {
 function renderEvolutionChart() {
   const section = document.getElementById('chart-section');
   const canvas = document.getElementById('evolutionChart');
+  const legendEl = document.getElementById('chart-legend');
   if (allRecords.length < 2) { section.style.display = 'none'; return; }
   section.style.display = 'block';
+
   const W = canvas.parentElement.clientWidth || 320;
-  const H = Math.round(W * 0.38);
-  canvas.width = W;
-  canvas.height = H;
+  const H = Math.round(W * 0.42);
+  canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, W, H);
+  ctx.clearRect(0,0,W,H);
 
-  const pts = allRecords.slice().reverse().slice(-8);
-  const pad = { t: 20, r: 20, b: 30, l: 30 };
-  const cw = W - pad.l - pad.r, ch = H - pad.t - pad.b;
+  const pts = allRecords.slice().reverse().slice(-10);
+  const pad = { t:24, r:16, b:32, l:34 };
+  const cw = W-pad.l-pad.r, ch = H-pad.t-pad.b;
 
-  // Grid
-  ctx.strokeStyle = '#e2d9ce'; ctx.lineWidth = 1;
+  // Background
+  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,W,H);
+
+  // Grid lines
   [0,25,50,75,100].forEach(v => {
     const y = pad.t + ch - (v/100)*ch;
-    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l+cw, y); ctx.stroke();
-    ctx.fillStyle = '#8c7b6a'; ctx.font = '10px Arial,sans-serif'; ctx.textAlign = 'right';
-    ctx.fillText(v, pad.l - 4, y + 3);
+    ctx.strokeStyle = v===0 ? '#ccc' : '#f0ece8'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cw,y); ctx.stroke();
+    ctx.fillStyle = '#b0a090'; ctx.font = '10px Arial'; ctx.textAlign='right';
+    ctx.fillText(v+'%', pad.l-4, y+3);
   });
 
-  // Linhas para cada emoção no primeiro registro
-  const colors = ['#c4956a','#5c4033','#8b6f47','#7aab6e'];
-  const topEmotions = [...new Set(allRecords.flatMap(r => r.emocoes||[]))].slice(0,4);
+  // Vertical grid
+  pts.forEach((_,i) => {
+    if (i===0) return;
+    const x = pad.l + (i/(pts.length-1))*cw;
+    ctx.strokeStyle='#f5f0ea'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(x,pad.t); ctx.lineTo(x,pad.t+ch); ctx.stroke();
+  });
 
-  topEmotions.forEach((em, ei) => {
-    ctx.beginPath(); ctx.strokeStyle = colors[ei % colors.length]; ctx.lineWidth = 2;
-    let first = true;
-    pts.forEach((r, i) => {
-      const x = pad.l + (i / (pts.length-1)) * cw;
+  const colors = ['#c4956a','#5c4033','#7aab6e','#2b5a8a','#b03020'];
+  const topEmotions = [...new Set(allRecords.flatMap(r=>r.emocoes||[]))].slice(0,4);
+
+  // Area fill for first emotion
+  if (topEmotions.length && pts.length > 1) {
+    const em = topEmotions[0];
+    ctx.beginPath();
+    let started = false;
+    pts.forEach((r,i) => {
+      const x = pad.l + (i/(pts.length-1))*cw;
       const intens = (r.intensidades||{})[em];
       if (intens == null) return;
       const y = pad.t + ch - (intens/100)*ch;
-      if (first) { ctx.moveTo(x, y); first = false; } else { ctx.lineTo(x, y); }
+      if (!started) { ctx.moveTo(x,y); started=true; } else ctx.lineTo(x,y);
+    });
+    // Close path to bottom
+    const lastPt = pts[pts.length-1];
+    if ((lastPt.intensidades||{})[em] != null) {
+      ctx.lineTo(pad.l+cw, pad.t+ch);
+      ctx.lineTo(pad.l, pad.t+ch);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0,pad.t,0,pad.t+ch);
+      grad.addColorStop(0,'rgba(196,149,106,0.18)');
+      grad.addColorStop(1,'rgba(196,149,106,0.02)');
+      ctx.fillStyle=grad; ctx.fill();
+    }
+  }
+
+  // Lines
+  topEmotions.forEach((em,ei) => {
+    ctx.beginPath(); ctx.strokeStyle=colors[ei%colors.length]; ctx.lineWidth=2.5;
+    ctx.lineJoin='round'; ctx.lineCap='round';
+    let first=true;
+    pts.forEach((r,i) => {
+      const x = pad.l + (i/(pts.length-1))*cw;
+      const intens = (r.intensidades||{})[em];
+      if (intens==null) return;
+      const y = pad.t+ch-(intens/100)*ch;
+      if (first) { ctx.moveTo(x,y); first=false; } else ctx.lineTo(x,y);
     });
     ctx.stroke();
+    // Dots
+    pts.forEach((r,i) => {
+      const x = pad.l+(i/(pts.length-1))*cw;
+      const intens=(r.intensidades||{})[em];
+      if (intens==null) return;
+      const y=pad.t+ch-(intens/100)*ch;
+      ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+      ctx.fillStyle='#fff'; ctx.fill();
+      ctx.strokeStyle=colors[ei%colors.length]; ctx.lineWidth=2; ctx.stroke();
+    });
   });
 
-  // Labels
-  ctx.fillStyle = '#8c7b6a'; ctx.font = '10px Arial,sans-serif'; ctx.textAlign = 'center';
-  pts.forEach((r, i) => {
-    const x = pad.l + (i / (pts.length-1)) * cw;
-    const d = new Date(r.date);
-    ctx.fillText(`${d.getDate()}/${d.getMonth()+1}`, x, H - 4);
+  // X labels
+  ctx.fillStyle='#8c7b6a'; ctx.font='10px Arial'; ctx.textAlign='center';
+  pts.forEach((r,i) => {
+    if (pts.length > 6 && i%2!==0) return;
+    const x=pad.l+(i/(pts.length-1))*cw;
+    const d=new Date(r.date);
+    ctx.fillText(`${d.getDate()}/${d.getMonth()+1}`,x,H-4);
+  });
+
+  // Legend
+  legendEl.innerHTML='';
+  topEmotions.forEach((em,ei) => {
+    const item = document.createElement('div');
+    item.className = 'chart-legend-item';
+    item.innerHTML = `<div class="chart-legend-dot" style="background:${colors[ei%colors.length]}"></div>${em}`;
+    legendEl.appendChild(item);
   });
 }
+
+// ============================================================
+// WHATSAPP
+// ============================================================
+function enviarWhatsAppRecord(r) {
+  if (!r) return;
+  const d = new Date(r.date);
+  const dateStr = d.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' });
+  const modeLabel = r.modo === 'simples' ? 'Simples' : 'Completo';
+  const emocoes = (r.emocoes||[]).map(em=>`${em} (${(r.intensidades||{})[em]||0}%)`).join(', ');
+
+  let msg = `🧠 *Registro RPD ${modeLabel}*\n👤 Paciente: ${r.pacienteNome||pacienteNome||'—'}\n📅 ${dateStr}\n\n`;
+  msg += `📍 *Situação:*\n${r.situacao||'—'}\n\n`;
+  msg += `💭 *Pensamento automático:*\n${r.pensamento||'—'}\n\n`;
+  if (r.modo==='completo' && r.crencaOriginal) msg += `📊 Crença no pensamento: ${r.crencaOriginal}%\n\n`;
+  msg += `😔 *Emoções:*\n${emocoes||'—'}\n\n`;
+  msg += `🔄 *Comportamento:*\n${r.comportamento||'—'}\n\n`;
+
+  if (r.distorcoes && r.distorcoes.length) msg += `⚠️ *Distorções identificadas:*\n${r.distorcoes.join(', ')}\n\n`;
+  if (r.provasFavor) msg += `✅ *Provas a favor:*\n${r.provasFavor}\n\n`;
+  if (r.provasContra) msg += `🔄 *Provas contra:*\n${r.provasContra}\n\n`;
+  if (r.novoPensamento) msg += `✨ *Novo pensamento:*\n${r.novoPensamento}\n\n`;
+  if (r.crencaNovo) msg += `📊 Crença no novo pensamento: ${r.crencaNovo}%\n\n`;
+  if (r.novoComportamento) msg += `🌱 *Novo comportamento:*\n${r.novoComportamento}\n\n`;
+  if (r.emocaoAntes != null && r.emocaoAgora != null) {
+    msg += `📉 *Reavaliação emocional:*\nAntes: ${r.emocaoAntes}% → Depois: ${r.emocaoAgora}%\n`;
+    if (r.novaEmocao) msg += `Nova emoção: ${r.novaEmocao}\n`;
+    msg += '\n';
+  }
+  msg += `_Enviado pelo app RPD_`;
+
+  window.open(`https://wa.me/${PSICO_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function enviarWhatsApp() { if (mindmapRecord) enviarWhatsAppRecord(mindmapRecord); }
 
 // ============================================================
 // MIND MAP
 // ============================================================
 function openMindmap(id) {
-  const r = allRecords.find(rec => rec.id === id);
+  const r = allRecords.find(rec=>rec.id===id);
   if (!r) return;
   mindmapRecord = r;
   const canvas = document.getElementById('mindmap-canvas');
-  const W = 460, H = Math.round(W * 2.2);
-  canvas.width = W; canvas.height = H;
-  const ctx = canvas.getContext('2d');
-  renderMindmapToCtx(ctx, r, W, H);
+  const W = 460, H = Math.round(W*2.0);
+  canvas.width=W; canvas.height=H;
+  renderMindmapToCtx(canvas.getContext('2d'), r, W, H);
   showScreen('mindmap');
 }
 
 function renderMindmapToCtx(ctx, r, W, H) {
-  // ── helpers ──────────────────────────────────────────────
   function wrap(text, maxW, font) {
-    ctx.font = font;
-    const words = (text||'—').split(' ');
-    const lines = []; let line = '';
+    ctx.font=font;
+    const words=(text||'—').split(' ');
+    const lines=[]; let line='';
     words.forEach(w => {
-      const test = line ? line + ' ' + w : w;
-      if (ctx.measureText(test).width > maxW && line) { lines.push(line); line = w; }
-      else line = test;
+      const test=line?line+' '+w:w;
+      if(ctx.measureText(test).width>maxW&&line){lines.push(line);line=w;}else line=test;
     });
-    if (line) lines.push(line);
+    if(line) lines.push(line);
     return lines;
   }
-  function roundRect(x, y, w, h, r2) {
+  function roundRect(x,y,w,h,r2) {
     ctx.beginPath();
-    if (ctx.roundRect) { ctx.roundRect(x, y, w, h, r2); }
-    else {
-      ctx.moveTo(x+r2,y); ctx.lineTo(x+w-r2,y);
-      ctx.quadraticCurveTo(x+w,y,x+w,y+r2);
-      ctx.lineTo(x+w,y+h-r2); ctx.quadraticCurveTo(x+w,y+h,x+w-r2,y+h);
-      ctx.lineTo(x+r2,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r2);
-      ctx.lineTo(x,y+r2); ctx.quadraticCurveTo(x,y,x+r2,y);
-      ctx.closePath();
-    }
+    if(ctx.roundRect){ctx.roundRect(x,y,w,h,r2);}
+    else{ctx.moveTo(x+r2,y);ctx.lineTo(x+w-r2,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r2);ctx.lineTo(x+w,y+h-r2);ctx.quadraticCurveTo(x+w,y+h,x+w-r2,y+h);ctx.lineTo(x+r2,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r2);ctx.lineTo(x,y+r2);ctx.quadraticCurveTo(x,y,x+r2,y);ctx.closePath();}
   }
 
-  // ── background ───────────────────────────────────────────
-  const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-  bgGrad.addColorStop(0,'#fdf9f5'); bgGrad.addColorStop(1,'#f0e8de');
-  ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, W, H);
+  const bgGrad=ctx.createLinearGradient(0,0,W,H);
+  bgGrad.addColorStop(0,'#fdf9f5');bgGrad.addColorStop(1,'#f0e8de');
+  ctx.fillStyle=bgGrad;ctx.fillRect(0,0,W,H);
 
-  // subtle grid texture
-  ctx.strokeStyle = 'rgba(139,111,71,0.05)'; ctx.lineWidth = 1;
-  for (let gx = 0; gx < W; gx += 28) { ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke(); }
-  for (let gy = 0; gy < H; gy += 28) { ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke(); }
+  // Header
+  const hGrad=ctx.createLinearGradient(0,0,W,58);
+  hGrad.addColorStop(0,'#3d2314');hGrad.addColorStop(1,'#7a5438');
+  ctx.fillStyle=hGrad;ctx.fillRect(0,0,W,58);
+  ctx.fillStyle='#fff';ctx.font='bold 13px Georgia,serif';ctx.textAlign='left';ctx.textBaseline='middle';
+  ctx.fillText('Registro de Pensamento Disfuncional',18,22);
+  ctx.font='10px Arial';ctx.fillStyle='rgba(255,255,255,0.65)';
+  const d=new Date(r.date);
+  ctx.fillText(`${r.pacienteNome||pacienteNome||'—'} · ${PSICO_NAME} · ${d.toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'})}`,18,40);
 
-  // ── header ───────────────────────────────────────────────
-  const hGrad = ctx.createLinearGradient(0,0,W,60);
-  hGrad.addColorStop(0,'#3d2314'); hGrad.addColorStop(1,'#7a5438');
-  ctx.fillStyle = hGrad; ctx.fillRect(0,0,W,58);
+  const nodeW=W-36,nodeX=18;
+  let curY=72;const GAP=10;
 
-  ctx.fillStyle='rgba(255,255,255,0.06)';
-  for(let i=0;i<6;i++){ctx.beginPath();ctx.arc(W*0.85+i*18,30,40-i*6,0,Math.PI*2);ctx.fill();}
-
-  ctx.fillStyle='#fff'; ctx.font=`bold 13px Georgia,serif`; ctx.textAlign='left'; ctx.textBaseline='middle';
-  ctx.fillText('Registro de Pensamento Disfuncional', 18, 22);
-  ctx.font=`10px Arial`; ctx.fillStyle='rgba(255,255,255,0.65)';
-  const d = new Date(r.date);
-  const nomePaciente = r.pacienteNome || pacienteNome || '—';
-  ctx.fillText(`Paciente: ${nomePaciente}  ·  ${PSICO_NAME}  ·  ${d.toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'})}`, 18, 40);
-
-  // pill badge
-  ctx.fillStyle='rgba(255,255,255,0.15)';
-  roundRect(W-72,14,60,22,11); ctx.fill();
-  ctx.fillStyle='rgba(255,255,255,0.9)'; ctx.font=`bold 8px Arial`; ctx.textAlign='center';
-  ctx.fillText('TCC · RPD', W-42, 25);
-
-  // ── flow nodes ───────────────────────────────────────────
-  const nodeW = W - 36, nodeX = 18;
-  const startY = 74;
-  const GAP = 10;
-
-  const nodes = [
-    {
-      label:'1 · PENSAMENTO AUTOMÁTICO',
-      val: r.pensamento,
-      bg: ['#4a1a0a','#7a3010'],
-      icon:'💭',
-      isRoot: true
-    },
-    {
-      label:'2 · SITUAÇÃO',
-      val: r.situacao,
-      bg: ['#2c3e6b','#3d5a9e'],
-      icon:'📍'
-    },
-    {
-      label:'3 · EMOÇÕES',
-      val: (r.emocoes||[]).length
-        ? (r.emocoes||[]).map(em=>`${em} (${(r.intensidades||{})[em]||'—'}/100)`).join(' · ')
-        : '—',
-      bg: ['#8b2020','#c0392b'],
-      icon:'🫀'
-    },
-    {
-      label:'4 · COMPORTAMENTO',
-      val: r.comportamento,
-      bg: ['#5c4012','#a07020'],
-      icon:'⚡'
-    },
-    {
-      label:'5 · DISTORÇÕES COGNITIVAS',
-      val: (r.distorcoes||[]).join(' · ')||'Nenhuma identificada',
-      bg: ['#3d1f6b','#6b3aad'],
-      icon:'🔍'
-    },
-    {
-      label:'6 · EVIDÊNCIAS A FAVOR',
-      val: r.provasFavor,
-      bg: ['#1a4a2a','#2e7d45'],
-      icon:'⚖️',
-      side:'left'
-    },
-    {
-      label:'7 · EVIDÊNCIAS CONTRA',
-      val: r.provasContra,
-      bg: ['#2a3a1a','#4e6e28'],
-      icon:'🔄',
-      side:'right'
-    },
-    {
-      label:'8 · NOVO PENSAMENTO',
-      val: r.novoPensamento,
-      bg: ['#0d4a3a','#1a8a6a'],
-      icon:'✨'
-    },
-    {
-      label:'9 · NOVO COMPORTAMENTO',
-      val: r.novoComportamento,
-      bg: ['#1a3a5a','#2e6a9e'],
-      icon:'🌱',
-      isLast: true
-    },
+  const isSimples = r.modo === 'simples';
+  const nodes = isSimples ? [
+    {label:'SITUAÇÃO',val:r.situacao,bg:['#2c3e6b','#3d5a9e'],icon:'📍'},
+    {label:'EMOÇÕES',val:(r.emocoes||[]).map(em=>`${em} (${(r.intensidades||{})[em]||'—'}%)`).join(' · ')||'—',bg:['#8b2020','#c0392b'],icon:'🫀'},
+    {label:'PENSAMENTO AUTOMÁTICO',val:r.pensamento,bg:['#4a1a0a','#7a3010'],icon:'💭',isRoot:true},
+    {label:'COMPORTAMENTO',val:r.comportamento,bg:['#5c4012','#a07020'],icon:'⚡'},
+    {label:'PROVAS A FAVOR',val:r.provasFavor,bg:['#1a4a2a','#2e7d45'],icon:'⚖️'},
+    {label:'PROVAS CONTRA',val:r.provasContra,bg:['#2a3a1a','#4e6e28'],icon:'🔄'},
+  ] : [
+    {label:'SITUAÇÃO',val:r.situacao,bg:['#2c3e6b','#3d5a9e'],icon:'📍'},
+    {label:'PENSAMENTO AUTOMÁTICO',val:r.pensamento,bg:['#4a1a0a','#7a3010'],icon:'💭',isRoot:true},
+    {label:'EMOÇÕES',val:(r.emocoes||[]).map(em=>`${em} (${(r.intensidades||{})[em]||'—'}%)`).join(' · ')||'—',bg:['#8b2020','#c0392b'],icon:'🫀'},
+    {label:'COMPORTAMENTO',val:r.comportamento,bg:['#5c4012','#a07020'],icon:'⚡'},
+    {label:'DISTORÇÕES',val:(r.distorcoes||[]).join(' · ')||'Nenhuma identificada',bg:['#3d1f6b','#6b3aad'],icon:'🔍'},
+    {label:'PROVAS A FAVOR',val:r.provasFavor,bg:['#1a4a2a','#2e7d45'],icon:'⚖️'},
+    {label:'PROVAS CONTRA',val:r.provasContra,bg:['#2a3a1a','#4e6e28'],icon:'🔄'},
+    {label:'NOVO PENSAMENTO',val:r.novoPensamento,bg:['#0d4a3a','#1a8a6a'],icon:'✨'},
+    {label:'NOVO COMPORTAMENTO',val:r.novoComportamento,bg:['#1a3a5a','#2e6a9e'],icon:'🌱',isLast:true},
   ];
 
-  // measure and draw each node, returning its bottom Y
-  let curY = startY;
+  nodes.forEach((node,i) => {
+    const lines=wrap(node.val||'—',nodeW-28,'10px Arial');
+    const textH=Math.min(lines.length,4)*14;
+    const boxH=(node.isRoot?56:48)+textH;
 
-  // evidence nodes side-by-side
-  const evidenceIndices = [5, 6];
-
-  let i = 0;
-  while (i < nodes.length) {
-    const node = nodes[i];
-
-    if (i === 5) {
-      // draw evidence pair side by side
-      const halfW = (nodeW - 8) / 2;
-      const leftNode = nodes[5], rightNode = nodes[6];
-
-      // connector arrow from node 4
-      ctx.strokeStyle='rgba(139,111,71,0.5)'; ctx.lineWidth=2;
-      ctx.setLineDash([4,3]);
-      ctx.beginPath(); ctx.moveTo(W/2, curY-GAP); ctx.lineTo(W/4+nodeX/2, curY+5); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(W/2, curY-GAP); ctx.lineTo(3*W/4-nodeX/2, curY+5); ctx.stroke();
+    if(i>0){
+      ctx.strokeStyle='rgba(139,111,71,0.4)';ctx.lineWidth=2;ctx.setLineDash([4,3]);
+      ctx.beginPath();ctx.moveTo(W/2,curY-GAP+2);ctx.lineTo(W/2,curY+4);ctx.stroke();
       ctx.setLineDash([]);
-
-      function drawHalfNode(n, x, w) {
-        const lines = wrap(n.val||'—', w-24, '9px Arial');
-        const textH = lines.length * 13;
-        const boxH = 46 + textH;
-        const grad = ctx.createLinearGradient(x, curY, x+w, curY+boxH);
-        grad.addColorStop(0, n.bg[0]); grad.addColorStop(1, n.bg[1]);
-        ctx.shadowColor='rgba(0,0,0,0.2)'; ctx.shadowBlur=8;
-        roundRect(x, curY, w, boxH, 8); ctx.fillStyle=grad; ctx.fill();
-        ctx.shadowColor='transparent'; ctx.shadowBlur=0;
-        // label
-        ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font=`bold 7px Arial`; ctx.textAlign='left'; ctx.textBaseline='top';
-        ctx.fillText(n.icon+'  '+n.label, x+10, curY+8);
-        // divider
-        ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=1;
-        ctx.beginPath(); ctx.moveTo(x+10, curY+22); ctx.lineTo(x+w-10, curY+22); ctx.stroke();
-        // text
-        ctx.fillStyle='rgba(255,255,255,0.92)'; ctx.font=`9px Arial`; ctx.textAlign='left'; ctx.textBaseline='top';
-        lines.forEach((line,li)=>{ ctx.fillText(line, x+10, curY+28+li*13); });
-        return boxH;
-      }
-
-      const leftH = (()=>{
-        const lines = wrap(leftNode.val||'—', halfW-24, '9px Arial');
-        return 46 + lines.length*13;
-      })();
-      const rightH = (()=>{
-        const lines = wrap(rightNode.val||'—', halfW-24, '9px Arial');
-        return 46 + lines.length*13;
-      })();
-      const pairH = Math.max(leftH, rightH);
-
-      drawHalfNode(leftNode, nodeX, halfW);
-      drawHalfNode(rightNode, nodeX+halfW+8, halfW);
-
-      curY += pairH + GAP;
-
-      // converging arrow
-      ctx.strokeStyle='rgba(139,111,71,0.5)'; ctx.lineWidth=2;
-      ctx.setLineDash([4,3]);
-      ctx.beginPath(); ctx.moveTo(W/4+nodeX/2, curY-GAP+5); ctx.lineTo(W/2, curY+5); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(3*W/4-nodeX/2, curY-GAP+5); ctx.lineTo(W/2, curY+5); ctx.stroke();
-      ctx.setLineDash([]);
-
-      i += 2; continue;
+      ctx.fillStyle='rgba(139,111,71,0.4)';
+      ctx.beginPath();ctx.moveTo(W/2-5,curY+1);ctx.lineTo(W/2+5,curY+1);ctx.lineTo(W/2,curY+7);ctx.closePath();ctx.fill();
     }
 
-    // regular node
-    const lines = wrap(node.val||'—', nodeW-28, '10px Arial');
-    const textH = Math.min(lines.length, 4) * 14;
-    const boxH = node.isRoot ? 56 + textH : 48 + textH;
+    const grad=ctx.createLinearGradient(nodeX,curY,nodeX+nodeW,curY+boxH);
+    grad.addColorStop(0,node.bg[0]);grad.addColorStop(1,node.bg[1]);
+    ctx.shadowColor='rgba(0,0,0,0.2)';ctx.shadowBlur=10;
+    roundRect(nodeX,curY,nodeW,boxH,node.isRoot?12:9);
+    ctx.fillStyle=grad;ctx.fill();
+    ctx.shadowColor='transparent';ctx.shadowBlur=0;
 
-    // connector arrow (except first node)
-    if (i > 0 && i !== 5 && i !== 6) {
-      ctx.strokeStyle='rgba(139,111,71,0.45)'; ctx.lineWidth=2;
-      ctx.setLineDash([4,3]);
-      ctx.beginPath(); ctx.moveTo(W/2, curY-GAP+2); ctx.lineTo(W/2, curY+4); ctx.stroke();
-      // arrowhead
-      ctx.setLineDash([]);
-      ctx.fillStyle='rgba(139,111,71,0.45)';
-      ctx.beginPath(); ctx.moveTo(W/2-5, curY+1); ctx.lineTo(W/2+5, curY+1); ctx.lineTo(W/2, curY+7); ctx.closePath(); ctx.fill();
-    }
+    if(node.isRoot){ctx.strokeStyle='rgba(255,200,120,0.3)';ctx.lineWidth=2;roundRect(nodeX-1,curY-1,nodeW+2,boxH+2,13);ctx.stroke();}
+    if(node.isLast){ctx.strokeStyle='rgba(120,200,255,0.3)';ctx.lineWidth=2;roundRect(nodeX-1,curY-1,nodeW+2,boxH+2,10);ctx.stroke();}
 
-    const grad = ctx.createLinearGradient(nodeX, curY, nodeX+nodeW, curY+boxH);
-    grad.addColorStop(0, node.bg[0]); grad.addColorStop(1, node.bg[1]);
-
-    ctx.shadowColor='rgba(0,0,0,0.2)'; ctx.shadowBlur=10;
-    roundRect(nodeX, curY, nodeW, boxH, node.isRoot ? 12 : 9);
-    ctx.fillStyle=grad; ctx.fill();
-    ctx.shadowColor='transparent'; ctx.shadowBlur=0;
-
-    // root glow ring
-    if (node.isRoot) {
-      ctx.strokeStyle='rgba(255,200,120,0.3)'; ctx.lineWidth=2;
-      roundRect(nodeX-1, curY-1, nodeW+2, boxH+2, 13); ctx.stroke();
-    }
-    if (node.isLast) {
-      ctx.strokeStyle='rgba(120,200,255,0.3)'; ctx.lineWidth=2;
-      roundRect(nodeX-1, curY-1, nodeW+2, boxH+2, 10); ctx.stroke();
-    }
-
-    // label row
-    ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font=`bold ${node.isRoot?8:7}px Arial`; ctx.textAlign='left'; ctx.textBaseline='top';
-    ctx.fillText(node.icon+'  '+node.label, nodeX+12, curY+9);
-
-    // divider
-    ctx.strokeStyle='rgba(255,255,255,0.12)'; ctx.lineWidth=1;
-    ctx.beginPath(); ctx.moveTo(nodeX+12, curY+23); ctx.lineTo(nodeX+nodeW-12, curY+23); ctx.stroke();
-
-    // value text
-    ctx.fillStyle='rgba(255,255,255,0.93)'; ctx.font=`${node.isRoot?'bold ':''} ${node.isRoot?11:10}px Arial`; ctx.textBaseline='top'; ctx.textAlign='left';
-    const maxLines = 4;
-    lines.slice(0, maxLines).forEach((line, li) => {
-      const isLast2 = li === maxLines-1 && lines.length > maxLines;
-      ctx.fillText(isLast2 ? line+'…' : line, nodeX+12, curY+28+li*14);
+    ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font=`bold ${node.isRoot?8:7}px Arial`;ctx.textAlign='left';ctx.textBaseline='top';
+    ctx.fillText(node.icon+'  '+node.label,nodeX+12,curY+9);
+    ctx.strokeStyle='rgba(255,255,255,0.12)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(nodeX+12,curY+23);ctx.lineTo(nodeX+nodeW-12,curY+23);ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,0.93)';ctx.font=`${node.isRoot?'bold ':''} ${node.isRoot?11:10}px Arial`;ctx.textBaseline='top';ctx.textAlign='left';
+    lines.slice(0,4).forEach((line,li)=>{
+      const isLast2=li===3&&lines.length>4;
+      ctx.fillText(isLast2?line+'…':line,nodeX+12,curY+28+li*14);
     });
-
-    curY += boxH + GAP;
-    i++;
-  }
-
-  // ── reavaliação band ─────────────────────────────────────
-  const bandH = 52, bandY = curY + 4;
-  const bandGrad = ctx.createLinearGradient(nodeX, bandY, nodeX+nodeW, bandY+bandH);
-  bandGrad.addColorStop(0,'#1a0d05'); bandGrad.addColorStop(1,'#3d2010');
-  ctx.shadowColor='rgba(0,0,0,0.25)'; ctx.shadowBlur=10;
-  roundRect(nodeX, bandY, nodeW, bandH, 10); ctx.fillStyle=bandGrad; ctx.fill();
-  ctx.shadowColor='transparent'; ctx.shadowBlur=0;
-
-  ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.font=`bold 7px Arial`; ctx.textAlign='left'; ctx.textBaseline='top';
-  ctx.fillText('⟳  REAVALIAÇÃO', nodeX+12, bandY+8);
-
-  const reItems = [
-    {label:'Crença original', val:(r.crencaOriginal??'—')+'/10'},
-    {label:'Novo pensamento', val:(r.crencaNovo??'—')+'/10'},
-    {label:'Emoção antes', val:(r.emocaoAntes??'—')+'/10'},
-    {label:'Emoção depois', val:(r.emocaoAgora??'—')+'/10'},
-  ];
-  const colW = nodeW / 4;
-  reItems.forEach((item, ri) => {
-    const rx = nodeX + ri*colW + colW/2;
-    ctx.fillStyle='#fff'; ctx.font=`bold 13px Arial`; ctx.textAlign='center'; ctx.textBaseline='middle';
-    ctx.fillText(item.val, rx, bandY+32);
-    ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font=`7px Arial`;
-    ctx.fillText(item.label, rx, bandY+44);
-    if (ri < 3) {
-      ctx.strokeStyle='rgba(255,255,255,0.12)'; ctx.lineWidth=1;
-      ctx.beginPath(); ctx.moveTo(rx+colW/2, bandY+18); ctx.lineTo(rx+colW/2, bandY+bandH-6); ctx.stroke();
-    }
+    curY+=boxH+GAP;
   });
 
-  // ── footer ───────────────────────────────────────────────
-  ctx.fillStyle='#c4a47a'; ctx.font=`7px Arial`; ctx.textAlign='center'; ctx.textBaseline='bottom';
-  ctx.fillText(`${PSICO_NAME} · ${PSICO_TITLE} · Registro de Pensamento Disfuncional`, W/2, H-4);
+  // Reavaliação (só no completo)
+  if (!isSimples && (r.emocaoAntes!=null||r.crencaOriginal!=null)) {
+    curY+=4;
+    const bandH=52;
+    const bandGrad=ctx.createLinearGradient(nodeX,curY,nodeX+nodeW,curY+bandH);
+    bandGrad.addColorStop(0,'#1a0d05');bandGrad.addColorStop(1,'#3d2010');
+    ctx.shadowColor='rgba(0,0,0,0.2)';ctx.shadowBlur=8;
+    roundRect(nodeX,curY,nodeW,bandH,10);ctx.fillStyle=bandGrad;ctx.fill();
+    ctx.shadowColor='transparent';ctx.shadowBlur=0;
+    ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='bold 7px Arial';ctx.textAlign='left';ctx.textBaseline='top';
+    ctx.fillText('REAVALIAÇÃO',nodeX+12,curY+8);
+    const reItems=[
+      {label:'Crença original',val:(r.crencaOriginal??'—')+'%'},
+      {label:'Novo pensamento',val:(r.crencaNovo??'—')+'%'},
+      {label:'Emoção antes',val:(r.emocaoAntes??'—')+'%'},
+      {label:'Emoção depois',val:(r.emocaoAgora??'—')+'%'},
+    ];
+    const colW=nodeW/4;
+    reItems.forEach((item,ri)=>{
+      const rx=nodeX+ri*colW+colW/2;
+      ctx.fillStyle='#fff';ctx.font='bold 13px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(item.val,rx,curY+32);
+      ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='7px Arial';
+      ctx.fillText(item.label,rx,curY+44);
+    });
+    curY+=bandH;
+  }
+
+  ctx.fillStyle='#c4a47a';ctx.font='7px Arial';ctx.textAlign='center';ctx.textBaseline='bottom';
+  ctx.fillText(`${PSICO_NAME} · ${PSICO_TITLE} · RPD`,W/2,H-4);
 }
 
-function exportMindmapPDF() {
-  if (!mindmapRecord) return;
-  exportPDF(mindmapRecord.id);
-}
-
-// ============================================================
-// ENVIAR PARA O PSICÓLOGO VIA WHATSAPP
-// ============================================================
-function enviarWhatsApp() {
-  const r = mindmapRecord;
-  if (!r) return;
-
-  const d = new Date(r.date);
-  const dateStr = d.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' });
-  const emocoes = (r.emocoes||[]).map(em => `${em} (${(r.intensidades||{})[em]||0}/100)`).join(', ');
-  const distorcoes = (r.distorcoes||[]).join(', ') || 'Nenhuma';
-
-  const msg =
-`🧠 *Novo Registro RPD*
-👤 Paciente: ${r.pacienteNome || pacienteNome || '—'}
-📅 ${dateStr}
-
-💭 *Pensamento automático:*
-${r.pensamento || '—'}
-
-📍 *Situação:*
-${r.situacao || '—'}
-
-😔 *Emoções:*
-${emocoes || '—'}
-
-🔄 *Comportamento:*
-${r.comportamento || '—'}
-
-⚠️ *Distorções cognitivas:*
-${distorcoes}
-
-✅ *Novo pensamento:*
-${r.novoPensamento || '—'}
-
-🌱 *Novo comportamento:*
-${r.novoComportamento || '—'}
-
-📊 *Reavaliação:*
-Crença original: ${r.crencaOriginal??'—'}/10 → Novo pensamento: ${r.crencaNovo??'—'}/10
-Emoção antes: ${r.emocaoAntes??'—'}/10 → depois: ${r.emocaoAgora??'—'}/10
-
-_Enviado pelo app RPD_`;
-
-  const numero = '5585994394944';
-  const url = `https://wa.me/${numero}?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
-}
+function exportMindmapPDF() { if (mindmapRecord) exportPDF(mindmapRecord.id); }
 
 // ============================================================
 // PDF EXPORT
 // ============================================================
 function exportPDF(id) {
-  const r = allRecords.find(rec => rec.id === id);
+  const r = allRecords.find(rec=>rec.id===id);
   if (!r) return;
+  const mmCanvas=document.createElement('canvas');
+  const mmW=900,mmH=Math.round(mmW*2.0);
+  mmCanvas.width=mmW;mmCanvas.height=mmH;
+  renderMindmapToCtx(mmCanvas.getContext('2d'),r,mmW,mmH);
+  const mmDataUrl=mmCanvas.toDataURL('image/png');
+  const d=new Date(r.date);
+  const dateStr=d.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  const modeLabel=r.modo==='simples'?'Simples':'Completo';
+  const emocoes=(r.emocoes||[]).map(em=>`${em} (${(r.intensidades||{})[em]||0}%)`).join(', ');
 
-  const mmCanvas = document.createElement('canvas');
-  const mmW = 900, mmH = Math.round(mmW * 2.2);
-  mmCanvas.width = mmW; mmCanvas.height = mmH;
-  const mmCtx = mmCanvas.getContext('2d');
-  renderMindmapToCtx(mmCtx, r, mmW, mmH);
-  const mmDataUrl = mmCanvas.toDataURL('image/png');
-
-  const d = new Date(r.date);
-  const dateStr = d.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' });
-  const emocoes = (r.emocoes||[]).map(em=>`${em} (intensidade: ${(r.intensidades||{})[em]||0}/100)`).join(', ');
-
-  // Notas clínicas para o PDF
-  const distNotes = (r.distorcoes||[]).map(name => {
-    const info = DISTORTION_MESSAGES[name];
-    return info ? `<li><strong>${name}:</strong> ${esc(info.msg)}</li>` : '';
-  }).filter(Boolean).join('');
-
-  const sections = [
-    { n:'1', title:'Pensamento automático', val: r.pensamento },
-    { n:'2', title:'Situação', val: r.situacao },
-    { n:'3', title:'Emoções', val: emocoes },
-    { n:'4', title:'Comportamento', val: r.comportamento },
-    { n:'5', title:'Distorções cognitivas', val: (r.distorcoes||[]).join(', ')||'Nenhuma selecionada' },
-    { n:'6', title:'Evidências a favor', val: r.provasFavor },
-    { n:'7', title:'Evidências contra', val: r.provasContra },
-    { n:'8', title:'Novo pensamento', val: r.novoPensamento },
-    { n:'9', title:'Reavaliação', val: `Crença no pensamento original: ${r.crencaOriginal??'—'}/10\nCrença no novo pensamento: ${r.crencaNovo??'—'}/10\nIntensidade emocional antes: ${r.emocaoAntes??'—'}/10\nIntensidade emocional depois: ${r.emocaoAgora??'—'}/10` },
-    { n:'10', title:'Novo comportamento', val: r.novoComportamento },
-  ];
-
-  const sectHTML = sections.map(s=>`
-    <div class="section">
-      <div class="section-label">${s.n}. ${s.title}</div>
-      <div class="section-val">${esc(s.val||'—')}</div>
-    </div>`).join('');
-
-  const html = `<!DOCTYPE html><html lang="pt-BR"><head>
-<meta charset="UTF-8">
-<title>RPD · ${PSICO_NAME}</title>
-<style>
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:Arial,sans-serif; background:#fff; color:#2d2016; padding:40px 48px; max-width:800px; margin:0 auto; }
-  .header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:28px; padding-bottom:20px; border-bottom:2px solid #5c4033; }
-  .header-left h1 { font-family:Georgia,serif; font-size:20px; color:#5c4033; margin-bottom:3px; font-weight:700; }
-  .header-left .sub { font-size:11px; color:#8c7b6a; text-transform:uppercase; letter-spacing:0.08em; }
-  .header-left .date { font-size:11px; color:#8c7b6a; margin-top:5px; }
-  .monogram { width:48px; height:48px; border-radius:10px; background:linear-gradient(135deg,#5c4033,#c4956a); color:#fff; font-family:Georgia,serif; font-size:18px; font-style:italic; display:flex; align-items:center; justify-content:center; font-weight:700; }
-  .psico-block { text-align:right; }
-  .psico-name { font-family:Georgia,serif; font-size:15px; color:#5c4033; font-weight:700; }
-  .psico-title { font-size:10px; color:#8c7b6a; text-transform:uppercase; letter-spacing:0.07em; }
-  .mindmap-section { margin-bottom:28px; }
-  .mindmap-section h2 { font-family:Georgia,serif; font-size:14px; color:#5c4033; margin-bottom:10px; font-weight:700; }
-  .mindmap-section img { width:100%; border-radius:12px; border:1px solid #e2d9ce; }
-  .sections-title { font-family:Georgia,serif; font-size:14px; color:#5c4033; margin-bottom:14px; padding-bottom:6px; border-bottom:1px solid #e2d9ce; font-weight:700; }
-  .section { margin-bottom:16px; page-break-inside:avoid; }
-  .section-label { font-size:10px; font-weight:700; color:#8b6f47; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:4px; }
-  .section-val { font-size:12px; color:#2d2016; line-height:1.65; white-space:pre-wrap; border-left:3px solid #e2d9ce; padding-left:10px; }
-  .clinical-section { margin-top:20px; padding:14px 16px; background:#fffbf0; border:1px solid #e8d89a; border-radius:8px; page-break-inside:avoid; }
-  .clinical-section h3 { font-family:Georgia,serif; font-size:12px; color:#5a4200; margin-bottom:10px; font-weight:700; }
-  .clinical-section ul { list-style:none; padding:0; }
-  .clinical-section li { font-size:11px; color:#5a4200; line-height:1.6; margin-bottom:8px; padding-left:12px; border-left:2px solid #e8d89a; }
-  .footer { margin-top:32px; padding-top:14px; border-top:1px solid #e2d9ce; display:flex; justify-content:space-between; align-items:center; }
-  .footer-left { font-size:9px; color:#bbb; }
-  .footer-right { font-size:9px; color:#c4956a; font-weight:600; }
-  @media print { body { padding:20px 28px; } }
-</style>
-</head><body>
+  const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>RPD · ${PSICO_NAME}</title>
+<style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;color:#2d2016;padding:40px 48px;max-width:800px;margin:0 auto;}
+.header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;padding-bottom:20px;border-bottom:2px solid #5c4033;}
+.header-left h1{font-family:Georgia,serif;font-size:20px;color:#5c4033;margin-bottom:3px;font-weight:700;}
+.sub{font-size:11px;color:#8c7b6a;text-transform:uppercase;letter-spacing:0.08em;}
+.date{font-size:11px;color:#8c7b6a;margin-top:5px;}
+.monogram{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#5c4033,#c4956a);color:#fff;font-family:Georgia,serif;font-size:18px;font-style:italic;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.psico-name{font-family:Georgia,serif;font-size:15px;color:#5c4033;font-weight:700;}
+.psico-title{font-size:10px;color:#8c7b6a;text-transform:uppercase;letter-spacing:0.07em;}
+.mindmap-section{margin-bottom:28px;}.mindmap-section h2{font-family:Georgia,serif;font-size:14px;color:#5c4033;margin-bottom:10px;font-weight:700;}
+.mindmap-section img{width:100%;border-radius:12px;border:1px solid #e2d9ce;}
+.sections-title{font-family:Georgia,serif;font-size:14px;color:#5c4033;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid #e2d9ce;font-weight:700;}
+.section{margin-bottom:16px;page-break-inside:avoid;}
+.section-label{font-size:10px;font-weight:700;color:#8b6f47;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:4px;}
+.section-val{font-size:12px;color:#2d2016;line-height:1.65;white-space:pre-wrap;border-left:3px solid #e2d9ce;padding-left:10px;}
+.footer{margin-top:32px;padding-top:14px;border-top:1px solid #e2d9ce;display:flex;justify-content:space-between;align-items:center;}
+.footer-left{font-size:9px;color:#bbb;}.footer-right{font-size:9px;color:#c4956a;font-weight:600;}
+@media print{body{padding:20px 28px;}}</style></head><body>
 <div class="header">
   <div class="header-left">
     <h1>Registro de Pensamento Disfuncional</h1>
-    <div class="sub">Terapia Cognitivo-Comportamental</div>
+    <div class="sub">TCC · Modo ${modeLabel}</div>
     <div class="date">📅 ${dateStr}</div>
     <div style="margin-top:4px;font-size:11px;color:#5a4030;font-weight:600">👤 Paciente: ${esc(r.pacienteNome||pacienteNome||'—')}</div>
   </div>
-  <div class="psico-block">
+  <div style="text-align:right">
     <div class="monogram">JS</div>
     <div class="psico-name" style="margin-top:6px">${PSICO_NAME}</div>
     <div class="psico-title">${PSICO_TITLE}</div>
   </div>
 </div>
-<div class="mindmap-section">
-  <h2>Mapa Mental do Registro</h2>
-  <img src="${mmDataUrl}" alt="Mapa Mental">
-</div>
+<div class="mindmap-section"><h2>Mapa Mental</h2><img src="${mmDataUrl}" alt="Mapa Mental"></div>
 <div class="sections-title">Relatório Detalhado</div>
-${sectHTML}
-${distNotes ? `<div class="clinical-section"><h3>💡 Reflexões sobre as distorções identificadas</h3><ul>${distNotes}</ul></div>` : ''}
+${[
+  {label:'Situação',val:r.situacao},
+  {label:'Pensamento automático',val:r.pensamento},
+  {label:'Emoções',val:emocoes},
+  {label:'Comportamento',val:r.comportamento},
+  {label:'Distorções cognitivas',val:(r.distorcoes||[]).join(', ')||null},
+  {label:'Provas a favor',val:r.provasFavor},
+  {label:'Provas contra',val:r.provasContra},
+  {label:'Novo pensamento',val:r.novoPensamento},
+  {label:'Novo comportamento',val:r.novoComportamento},
+  {label:'Reavaliação',val:r.emocaoAntes!=null?`Crença original: ${r.crencaOriginal??'—'}%\nNovo pensamento: ${r.crencaNovo??'—'}%\nEmoção antes: ${r.emocaoAntes}% → depois: ${r.emocaoAgora}%`:null},
+].filter(s=>s.val).map(s=>`<div class="section"><div class="section-label">${s.label}</div><div class="section-val">${esc(s.val)}</div></div>`).join('')}
 <div class="footer">
-  <div class="footer-left">Gerado pelo app RPD · ${PSICO_NAME} · ${PSICO_TITLE}</div>
+  <div class="footer-left">Gerado pelo app RPD · ${PSICO_NAME}</div>
   <div class="footer-right">Documento confidencial — uso clínico</div>
-</div>
-</body></html>`;
+</div></body></html>`;
 
-  const blob = new Blob([html], { type:'text/html' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `RPD_${PSICO_NAME.replace(/ /g,'_')}_${d.toISOString().slice(0,10)}.html`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 5000);
-  showToast('📄 Relatório baixado! Abra o arquivo para imprimir como PDF.');
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`RPD_${d.toISOString().slice(0,10)}.html`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),5000);
+  showToast('Relatório baixado! Abra o arquivo para imprimir como PDF.');
+}
+
+// ============================================================
+// BIBLIOTECA
+// ============================================================
+function buildLibrary() {
+  buildTecnicas();
+  buildDistorcoesDict();
+}
+
+function switchLibTab(tab, el) {
+  document.querySelectorAll('.lib-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.lib-content').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('lib-'+tab).classList.add('active');
+}
+
+function buildTecnicas() {
+  const container = document.getElementById('lib-tecnicas');
+  container.innerHTML = '';
+  TECNICAS.forEach((t,i) => {
+    const card = document.createElement('div');
+    card.className = 'technique-card';
+    const stepsHTML = t.steps.map((s,si)=>`<li><div class="step-num">${si+1}</div><span>${s}</span></li>`).join('');
+    card.innerHTML = `
+      <div class="technique-header" onclick="toggleTechnique('tech-${i}')">
+        <span class="technique-icon">${t.icon}</span>
+        <span class="technique-title">${t.title}</span>
+        <span class="technique-toggle" id="tech-toggle-${i}">↓</span>
+      </div>
+      <div class="technique-body" id="tech-${i}">
+        <p>${t.intro}</p>
+        <ul class="technique-steps">${stepsHTML}</ul>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function toggleTechnique(id) {
+  const body = document.getElementById(id);
+  const idx = id.split('-')[1];
+  const toggle = document.getElementById('tech-toggle-'+idx);
+  const open = body.classList.toggle('open');
+  if (toggle) toggle.textContent = open ? '↑' : '↓';
+}
+
+function buildDistorcoesDict() {
+  const container = document.getElementById('lib-distorcoes');
+  container.innerHTML = '';
+  DISTORTIONS_DICT.forEach((d,i) => {
+    const card = document.createElement('div');
+    card.className = 'distortion-dict-card';
+    card.innerHTML = `
+      <div class="distortion-dict-header" onclick="toggleDistDict('dist-${i}')">
+        <span class="distortion-dict-icon">${d.icon}</span>
+        <span class="distortion-dict-name">${d.name}</span>
+        <span id="dist-toggle-${i}" style="color:var(--muted);font-size:0.85rem">↓</span>
+      </div>
+      <div class="distortion-dict-body" id="dist-${i}">
+        <p>${d.desc}</p>
+        <div class="distortion-example">💭 ${d.example}</div>
+        <div class="distortion-alt">✨ ${d.alt}</div>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function toggleDistDict(id) {
+  const body = document.getElementById(id);
+  const idx = id.split('-')[1];
+  const toggle = document.getElementById('dist-toggle-'+idx);
+  const open = body.classList.toggle('open');
+  if (toggle) toggle.textContent = open ? '↑' : '↓';
 }
 
 // ============================================================
 // TOAST / HELPERS
 // ============================================================
 function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3200);
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
 }
 function slugify(str) { return str.toLowerCase().replace(/[^a-z0-9]/g,'_'); }
 function esc(str) { if(!str) return ''; return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-document.addEventListener('input', e => { if (e.target.tagName==='TEXTAREA') saveDraft(); });
+document.addEventListener('input', e => { if(e.target.tagName==='TEXTAREA') saveDraft(); });
 
 // ============================================================
-// SERVICE WORKER (PWA)
+// PWA
 // ============================================================
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
-  });
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{ navigator.serviceWorker.register('./sw.js').catch(()=>{}); });
 }
-
-// Banner de instalação PWA
-let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  const banner = document.getElementById('install-banner');
-  if (banner) banner.style.display = 'flex';
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();deferredPrompt=e;
+  const b=document.getElementById('install-banner');if(b)b.style.display='flex';
 });
-window.addEventListener('appinstalled', () => {
-  const banner = document.getElementById('install-banner');
-  if (banner) banner.style.display = 'none';
-  deferredPrompt = null;
+window.addEventListener('appinstalled',()=>{
+  const b=document.getElementById('install-banner');if(b)b.style.display='none';deferredPrompt=null;
 });
-function installApp() {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-  const banner = document.getElementById('install-banner');
-  if (banner) banner.style.display = 'none';
+function installApp(){
+  if(!deferredPrompt)return;deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(()=>{deferredPrompt=null;});
+  const b=document.getElementById('install-banner');if(b)b.style.display='none';
 }
-function dismissInstall() {
-  const banner = document.getElementById('install-banner');
-  if (banner) banner.style.display = 'none';
+function dismissInstall(){
+  const b=document.getElementById('install-banner');if(b)b.style.display='none';
 }
 </script>
-
-<!-- Banner PWA Install -->
-<div id="install-banner" role="banner" aria-label="Instalar aplicativo">
-  <div class="install-text">
-    📲 Adicionar à tela inicial
-    <span>Use offline como um app nativo</span>
-  </div>
-  <div class="install-actions">
-    <button class="btn-install" onclick="installApp()">Instalar</button>
-    <button class="btn-install-dismiss" onclick="dismissInstall()">Agora não</button>
-  </div>
-</div>
 </body>
 </html>
