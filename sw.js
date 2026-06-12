@@ -1,7 +1,10 @@
-const CACHE_NAME = 'rpd-v6';
+const CACHE_NAME = 'rpd-v7';
 const ASSETS = [
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './logo.png',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 self.addEventListener('install', event => {
